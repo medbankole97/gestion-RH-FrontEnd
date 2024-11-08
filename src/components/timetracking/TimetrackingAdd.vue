@@ -82,6 +82,7 @@
     padding: 20px 2em;
     margin-top: 50px;
     min-height: 80vh;
+    width: 80%;
   }
   </style>
   

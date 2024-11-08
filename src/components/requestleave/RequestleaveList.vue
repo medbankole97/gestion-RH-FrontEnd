@@ -1,5 +1,5 @@
 <template>
-    <h1>demande de congé</h1>
+  <h1>demande de congé</h1>
 </template>
 
 <script setup>

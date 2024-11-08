@@ -1,66 +1,81 @@
 <template>
-  <div class="login-container">
-    <h2>Login</h2>
-    <form @submit.prevent="login">
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input v-model="email" type="email" id="email" required />
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input v-model="password" type="password" id="password" required />
-      </div>
-      <button type="submit" class="login-button">Log In</button>
-    </form>
-    <p v-if="error" class="error-message">{{ error }}</p>
+  <div class="login-background">
+    <div class="login-container">
+      <h2>Login</h2>
+      <form @submit.prevent="login">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input v-model="email" type="email" id="email" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input v-model="password" type="password" id="password" required />
+        </div>
+        <button type="submit" class="login-button">Log In</button>
+      </form>
+      <p v-if="error" class="error-message">{{ error }}</p>
+      <!-- Forgot Password Link -->
+      <p class="forgot-password">
+        <router-link to="/forgot-password">Forgot Password?</router-link>
+      </p>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import Swal from 'sweetalert2';
 import { useAuthStore } from '@store/authStore';
 
-// Déclarations de références pour les champs de connexion et l'erreur
 const email = ref('');
 const password = ref('');
 const error = ref(null);
-
-// Utilisation du store d'authentification et de Vue Router
 const authStore = useAuthStore();
 const router = useRouter();
 
-// Fonction de connexion
 const login = async () => {
   try {
-    // Appel à la fonction login du store d'authentification
     await authStore.login(email.value, password.value);
 
-    // Redirection vers la page dashboard après une connexion réussie
+    Swal.fire({
+      icon: 'success',
+      title: 'Successfully Authenticated',
+      text: 'You are now logged in!',
+      showConfirmButton: false,
+      timer: 1500
+    });
+
     router.push('/Navbar');
   } catch (err) {
-    // Gestion de l'erreur en affichant le message dans l'interface
     error.value = err.message;
   }
 };
 </script>
 
 <style scoped>
-/* Styles pour le formulaire de connexion */
+.login-background {
+  background-image: linear-gradient(to bottom right, #e0f7fa, #b2ebf2);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .login-container {
+  width: 100%;
   max-width: 400px;
-  margin: auto;
   padding: 2rem;
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   text-align: center;
-  transform: translateY(50%);
 }
 
 h2 {
-  color: #333;
+  color: #007bff;
   margin-bottom: 1.5rem;
+  font-weight: bold;
 }
 
 .form-group {
@@ -70,7 +85,7 @@ h2 {
 
 label {
   display: block;
-  font-weight: bold;
+  font-weight: 600;
   margin-bottom: 0.5rem;
   color: #555;
 }
@@ -99,16 +114,30 @@ input:focus {
   border-radius: 4px;
   cursor: pointer;
   margin-top: 1rem;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .login-button:hover {
   background-color: #0056b3;
+  transform: scale(1.05);
 }
 
 .error-message {
   color: red;
   margin-top: 1rem;
   font-size: 0.9rem;
+}
+
+.forgot-password {
+  margin-top: 1rem;
+}
+
+.forgot-password a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
 }
 </style>

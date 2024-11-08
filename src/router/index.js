@@ -8,6 +8,8 @@ import UserList from '@/components/user/UserList.vue';
 import UserAdd from '@/components/user/UserAdd.vue';
 import UserEdit from '@/components/user/UserEdit.vue';
 import UserDetail from '@/components/user/UserDetail.vue'
+import ForgotPassword from '@/components/ForgotPassword.vue'
+import ResetPassword from '@/components/ResetPassword.vue'
 
 import TypeleaveList from '@/components/typeLeave/TypeleaveList.vue';
 import TypeleaveAdd from '@/components/typeLeave/TypeleaveAdd.vue';
@@ -130,6 +132,19 @@ const routes = [
         component: TimetrackingDetail,
         meta: { requiresAuth: true },
     },
+    {
+        path: "/forgot-password",
+        name: 'ForgotPassword',
+        component: ForgotPassword,
+        meta: { requiresAuth: true },
+    },
+    {
+        path: "/reset-password",
+        name: 'ResetPassword',
+        component: ResetPassword,
+        meta: { requiresAuth: true },
+    },
+
 ];
 
 const router = createRouter({
