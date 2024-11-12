@@ -22,19 +22,17 @@
             <th scope="col">#</th>
             <th scope="col">Check-in Time</th>
             <th scope="col">Check-out Time</th>
-            <th scope="col">User</th>
             <th scope="col" class="text-center">Action</th>
           </tr>
         </thead>
         <tbody>
           <tr v-if="filteredTimeTrackings.length === 0">
-            <td colspan="5" class="text-center">No data available</td>
+            <td colspan="4" class="text-center">No data available</td>
           </tr>
           <tr v-for="(timeTracking, index) in filteredTimeTrackings" :key="timeTracking.id" class="table-row">
             <td scope="row">{{ index + 1 }}</td>
-            <td>{{ formatDate(timeTracking.checkin_time) }}</td>
-            <td>{{ timeTracking.checkout_time ? formatDate(timeTracking.checkout_time) : 'N/A' }}</td>
-            <td>{{ getUserFullName(timeTracking.userId) }}</td>
+            <td>{{ timeTracking.checkin_time || 'N/A' }}</td>
+            <td>{{ timeTracking.checkout_time || 'N/A' }}</td>
             <td class="text-center action-icons">
               <font-awesome-icon 
                 icon="eye" 
@@ -63,18 +61,13 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useTimeTrackingStore } from '@/store/timetrackingStore';
-import { useUserStore } from '@/store/userStore';
-import dayjs from 'dayjs';
 
 const router = useRouter();
 const timeTrackingStore = useTimeTrackingStore();
-const userStore = useUserStore();
-
-const searchQuery = ref(""); 
+const searchQuery = ref("");
 
 onMounted(() => {
   timeTrackingStore.loadDataFromApi();
-  userStore.loadDataFromApi();
 });
 
 const filteredTimeTrackings = computed(() => {
@@ -86,19 +79,12 @@ const filteredTimeTrackings = computed(() => {
   return timeTrackingStore.timeTrackings;
 });
 
-const getUserFullName = (userId) => {
-  const user = userStore.users.find(u => u.id === userId);
-  return user ? user.fullname : 'Unknown';
-};
-
-const formatDate = (date) => dayjs(date).format('DD/MM/YYYY HH:mm');
-
 const viewTimeTracking = (id) => {
-  router.push({ name: 'view-time-tracking', params: { id } });
+  router.push({ name: 'detail-timetracking', params: { id } });
 };
 
 const editTimeTracking = (id) => {
-  router.push({ name: 'edit-time-tracking', params: { id } });
+  router.push({ name: 'modifier-timetracking', params: { id } });
 };
 
 const remove = async (id) => {
@@ -109,6 +95,7 @@ const remove = async (id) => {
 </script>
 
 <style scoped>
+/* Votre CSS reste le même */
 .time-tracking-list-container {
   padding: 20px 2em;
   margin-top: 50px; 

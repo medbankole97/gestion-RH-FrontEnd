@@ -42,7 +42,7 @@
             </router-link>
           </li>
         </ul>
-
+        <h5>{{ authStore.user?.fullname }}</h5>
         <!-- Déconnexion à droite -->
         <button @click="logout" class="btn btn-outline-light logout-button">
           <i class="fas fa-sign-out-alt"></i> Logout
@@ -55,7 +55,10 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useAuthStore } from '../store/authStore';
 import Swal from 'sweetalert2';
+
+const authStore = useAuthStore();
 
 const linkActive = ref('list-user');
 const route = useRoute();
@@ -87,7 +90,7 @@ const logout = () => {
     confirmButtonText: 'Yes, logout'
   }).then((result) => {
     if (result.isConfirmed) {
-      router.push('/login');
+      router.push('/');
     }
   });
 };

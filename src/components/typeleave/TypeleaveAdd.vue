@@ -15,20 +15,8 @@
           />
         </div>
 
-        <div class="mb-3">
-          <label for="userId" class="form-label">Select User</label>
-          <select
-            id="userId"
-            class="form-select"
-            v-model="typeLeaveForm.userId"
-            required
-          >
-            <option value="" disabled>Select a user</option>
-            <option v-for="user in users" :key="user.id" :value="user.id">
-              {{ user.fullname }}
-            </option>
-          </select>
-        </div>
+        <!-- Champ 'User' supprimé -->
+
         <router-link to="/list-type-leave" class="btn btn-secondary me-2"> <i class="fa-solid fa-arrow-left"></i> Cancel</router-link>
         <button type="submit" class="btn btn-success">Add Type Leave</button>
         
@@ -36,28 +24,16 @@
     </div>
   </div>
 </template>
-
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useTypeLeaveStore } from '@/store/typeleaveStore';
-import { useUserStore } from '@/store/userStore';
 
 const router = useRouter();
 const typeLeaveStore = useTypeLeaveStore();
-const userStore = useUserStore();
 
 const typeLeaveForm = ref({
-  name: '',
-  userId: null,
-});
-
-onMounted(async () => {
-  try {
-    await userStore.loadDataFromApi();
-  } catch (error) {
-    console.error("Error loading users:", error);
-  }
+  name: '', // 'userId' supprimé
 });
 
 const handleSubmit = async () => {
@@ -68,10 +44,7 @@ const handleSubmit = async () => {
     console.error("Error adding type leave:", error);
   }
 };
-
-const users = computed(() => userStore.users);
 </script>
-
 <style scoped>
 .container-fluid {
   padding: 20px 2em;
@@ -89,7 +62,58 @@ const users = computed(() => userStore.users);
   max-width: 500px; /* Largeur maximale du formulaire */
   padding: 2em;
   background-color: #f9f9f9;
-  border-radius: 8px;
+  /* border-radius: 8px; */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mb-3 {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.form-control {
+  padding: 0.75rem;
+  font-size: 1rem;
+  /* border-radius: 5px; */
+  border: 1px solid #ced4da;
+}
+
+.form-select {
+  padding: 0.75rem;
+  font-size: 1rem;
+  /* border-radius: 5px; */
+  border: 1px solid #ced4da;
+}
+
+.btn {
+  /* border-radius: 20px; */
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+.text-center {
+  text-align: center;
 }
 </style>

@@ -43,7 +43,7 @@
               <option value="" disabled>Select a role</option>
               <option value="ADMIN">ADMIN</option>
               <option value="EMPLOYE">EMPLOYE</option>
-              <option value="GESTIONNAIRE">GESTIONNAIRE</option>
+              <option value="MANAGER"> MANAGER</option>
             </select>
           </div>
           <div class="mb-3 form-check">

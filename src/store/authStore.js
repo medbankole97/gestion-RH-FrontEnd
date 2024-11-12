@@ -17,6 +17,7 @@ export const useAuthStore = defineStore("auth", {
         this.token = accessToken;
         this.user = user;
         localStorage.setItem('authToken', accessToken);
+        
 
         // Ajout de l'authentification dans les headers d'axios
         axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;

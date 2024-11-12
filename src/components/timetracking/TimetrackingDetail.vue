@@ -1,56 +1,73 @@
-<!-- src/components/TimeTrackingDetail.vue -->
 <template>
-    <div class="container-fluid">
-      <h2 class="text-center mb-4">Time Tracking Details</h2>
-  
-      <div class="mb-3">
-        <strong>Check-in Time:</strong>
-        <p>{{ timeTracking.checkin_time }}</p>
-      </div>
-  
-      <div class="mb-3">
-        <strong>Check-out Time:</strong>
-        <p>{{ timeTracking.checkout_time || 'N/A' }}</p>
-      </div>
-  
-      <div class="mb-3">
-        <strong>User:</strong>
-        <p>{{ getUserFullName(timeTracking.userId) }}</p>
-      </div>
-  
-      <router-link to="/list-time-tracking" class="btn btn-secondary">Back to List</router-link>
+  <div class="detail-time-tracking-container">
+    <h2 class="text-center mb-4">Time Tracking Details</h2>
+
+    <div class="detail-item">
+      <strong>Check-in Time:</strong> {{ formattedCheckinTime }}
     </div>
-  </template>
-  
-  <script setup>
-  import { ref, onMounted } from 'vue';
-  import { useRoute } from 'vue-router';
-  import { useTimeTrackingStore } from '@/store/timetrackingStore';
-  import { useUserStore } from '@/store/userStore';
-  
-  const route = useRoute();
-  const timeTrackingStore = useTimeTrackingStore();
-  const userStore = useUserStore();
-  
-  const timeTracking = ref({});
-  
-  // Charger les données de l'enregistrement de pointage et les utilisateurs
-  onMounted(async () => {
-    await userStore.loadDataFromApi();
-    timeTracking.value = await timeTrackingStore.getById(route.params.id);
-  });
-  
-  const getUserFullName = (userId) => {
-    const user = userStore.users.find((u) => u.id === userId);
-    return user ? user.fullname : 'Unknown';
-  };
-  </script>
-  
-  <style scoped>
-  .container-fluid {
-    padding: 20px 2em;
-    margin-top: 50px;
-    min-height: 80vh;
+    <div class="detail-item">
+      <strong>Check-out Time:</strong> {{ formattedCheckoutTime }}
+    </div>
+
+    <button @click="goBack" class="btn btn-secondary mt-3">Back</button>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed, onMounted } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { useTimeTrackingStore } from '@/store/timetrackingStore';
+import dayjs from 'dayjs';
+
+const router = useRouter();
+const route = useRoute();
+const timeTrackingStore = useTimeTrackingStore();
+
+const checkin_time = ref('');
+const checkout_time = ref('');
+
+onMounted(async () => {
+  console.log('Fetching time tracking with ID:', route.params.id); // Log l'ID que nous récupérons
+  const timeTrackingResponse = await timeTrackingStore.fetchById(route.params.id);
+  console.log('Fetched time tracking:', timeTrackingResponse); // Log les données récupérées depuis l'API
+
+  if (timeTrackingResponse && timeTrackingResponse.timeTracking) {
+    const timeTracking = timeTrackingResponse.timeTracking;
+    checkin_time.value = timeTracking.checkin_time;
+    checkout_time.value = timeTracking.checkout_time;
+    console.log('Check-in:', checkin_time.value, 'Check-out:', checkout_time.value); // Log les valeurs des temps
+  } else {
+    console.log('No time tracking found for the provided ID.');
   }
-  </style>
-  
+});
+
+const formattedCheckinTime = computed(() => {
+  console.log('Formatted Check-in Time:', checkin_time.value); // Log la valeur formatée du checkin
+  return checkin_time.value ? dayjs(checkin_time.value).format('DD/MM/YYYY HH:mm') : 'N/A';
+});
+
+const formattedCheckoutTime = computed(() => {
+  console.log('Formatted Check-out Time:', checkout_time.value); // Log la valeur formatée du checkout
+  return checkout_time.value ? dayjs(checkout_time.value).format('DD/MM/YYYY HH:mm') : 'N/A';
+});
+
+const goBack = () => {
+  router.push('/timetracking');
+};
+</script>
+
+<style scoped>
+.detail-time-tracking-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.detail-item {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+</style>

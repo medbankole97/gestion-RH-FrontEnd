@@ -81,7 +81,7 @@ const onEdit = async () => {
       status: form.status // Incluez le statut ici
     });
     toast.success("User updated successfully!");
-    router.push('/users');
+    router.push({ name: 'list-user' });
   } catch (error) {
     toast.error("Error updating user.");
     console.error("Error updating user:", error);

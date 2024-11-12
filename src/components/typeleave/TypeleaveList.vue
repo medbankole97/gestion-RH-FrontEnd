@@ -21,18 +21,16 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
-            <th scope="col">User</th>
             <th scope="col" class="text-center">Action</th>
           </tr>
         </thead>
         <tbody>
           <tr v-if="filteredTypeLeaves.length === 0">
-            <td colspan="4" class="text-center">No data available</td>
+            <td colspan="3" class="text-center">No data available</td>
           </tr>
           <tr v-for="(typeLeave, index) in filteredTypeLeaves" :key="typeLeave.id" class="table-row">
             <td scope="row">{{ index + 1 }}</td>
             <td>{{ typeLeave.name }}</td>
-            <td>{{ getUserFullName(typeLeave.userId) }}</td>
             <td class="text-center action-icons">
               <font-awesome-icon 
                 icon="eye" 
@@ -57,16 +55,13 @@
   </div>
 </template>
 
-  
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useTypeLeaveStore } from '@/store/typeleaveStore';
-import { useUserStore } from '@/store/userStore';
 
 const router = useRouter(); 
 const typeLeaveStore = useTypeLeaveStore();
-const userStore = useUserStore(); // Créez une instance du store utilisateur
 const searchQuery = ref(""); 
 
 const filteredTypeLeaves = computed(() => {
@@ -78,15 +73,9 @@ const filteredTypeLeaves = computed(() => {
   return typeLeaveStore.typeLeaves;
 });
 
-// Récupérer le nom complet de l'utilisateur en fonction de userId
-const getUserFullName = (userId) => {
-  const user = userStore.users.find(u => u.id === userId);
-  return user ? user.fullname : 'Unknown';
-};
-
 const viewDetails = (typeLeave) => {
   console.log("Viewing details for:", typeLeave);
-  router.push({ name: 'detail-type-leave', params: { id: typeLeave.id } });
+  router.push({ name: 'detail-typeleave', params: { id: typeLeave.id } });
 };
 
 const editTypeLeave = (id) => {
@@ -107,11 +96,9 @@ const remove = async (id) => {
 
 onMounted(() => {
   typeLeaveStore.loadDataFromApi();
-  userStore.loadDataFromApi(); // Chargez également les utilisateurs
 });
 </script>
 
-  
 <style scoped>
 .type-leave-list-container {
   padding: 20px 2em;

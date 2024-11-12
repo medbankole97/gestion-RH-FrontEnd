@@ -15,7 +15,7 @@
         />
         <button type="submit">Confirmer</button>
       </form>
-      <p v-if="message" class="message">{{ message }}</p>
+      <p v-if="message" class="message"> {{ message }}</p>
     </div>
   </template>
   
