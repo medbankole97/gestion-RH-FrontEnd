@@ -37,7 +37,7 @@ L'application de gestion des ressources humaines permet de gérer les informatio
 1. Clonez le dépôt :
 
 ```bash
-git https://github.com/medbankole97/gestion-RH-FrontEnd.git
+git clone https://github.com/medbankole97/gestion-RH-FrontEnd.git
 ```
 
 2. Accédez au répertoire du projet :

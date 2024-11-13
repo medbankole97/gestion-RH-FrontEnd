@@ -1,0 +1,100 @@
+{
+    "login": {
+      "title": "تسجيل الدخول",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "log_in_button": "تسجيل الدخول",
+      "successfully_authenticated": "تم التوثيق بنجاح",
+      "logged_in_message": "أنت الآن مسجل دخولك!",
+      "forgot_password": "هل نسيت كلمة المرور؟"
+    },
+    "navbar": {
+      "users": "المستخدمين",
+      "timetracking": "تتبع الوقت",
+      "requestLeave": "طلب إجازة",
+      "typeLeave": "نوع الإجازة",
+      "logout": "تسجيل الخروج",
+      "confirmLogout": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+      "yesLogout": "نعم، تسجيل الخروج"
+    },
+        "userList": {
+          "title": "قائمة المستخدمين",
+          "searchPlaceholder": "ابحث...",
+          "newUserButton": "مستخدم جديد",
+          "noData": "لا توجد بيانات",
+          "active": "نشط",
+          "inactive": "غير نشط",
+          "viewDetails": "عرض التفاصيل",
+          "editUser": "تعديل المستخدم",
+          "deleteUser": "حذف المستخدم",
+          "deleteConfirmation": "هل أنت متأكد أنك تريد حذف هذا المستخدم؟",
+          "userDeleted": "تم حذف المستخدم بنجاح!",
+          "deleteError": "خطأ في حذف المستخدم.",
+          "fullname": "الاسم الكامل",
+          "email": "البريد الإلكتروني",
+          "role": "الدور",
+          "status": "الحالة",
+          "action": "الإجراء"
+        },
+        "userAdd": {
+            "title": "إضافة مستخدم جديد",
+            "fullname": "الاسم الكامل",
+            "fullnamePlaceholder": "يجب إدخال 5 أحرف على الأقل!",
+            "email": "البريد الإلكتروني",
+            "emailPlaceholder": "أدخل عنوان بريد إلكتروني صالح",
+            "password": "كلمة المرور",
+            "passwordPlaceholder": "أدخل كلمة مرور آمنة",
+            "role": "الدور",
+            "rolePlaceholder": "اختر الدور",
+            "roleAdmin": "مسؤول",
+            "roleEmployee": "موظف",
+            "roleManager": "مدير",
+            "status": "نشط",
+            "cancelButton": "إلغاء",
+            "addButton": "إضافة مستخدم",
+            "successMessage": "تمت إضافة المستخدم بنجاح!",
+            "errorMessage": "فشل في إضافة المستخدم"
+          },
+          "userDetail": {
+            "title": "تفاصيل المستخدم",
+            "fullname": "الاسم الكامل",
+            "email": "البريد الإلكتروني",
+            "role": "الدور",
+            "status": "الحالة",
+            "active": "نشط",
+            "inactive": "غير نشط",
+            "backToList": "العودة إلى القائمة"
+          },
+          "timeTrackingList": {
+            "title": "قائمة تتبع الوقت",
+            "searchPlaceholder": "بحث...",
+            "newTimeTrackingButton": "تتبع وقت جديد",
+            "noDataMessage": "لا توجد بيانات متاحة",
+            "columns": {
+              "index": "#",
+              "checkinTime": "وقت الدخول",
+              "checkoutTime": "وقت الخروج",
+              "action": "إجراء"
+            },
+            "deleteConfirmation": "هل أنت متأكد أنك تريد حذف تتبع الوقت هذا؟"
+          },
+          "addTimeTracking": {
+            "title": "إضافة تتبع وقت جديد",
+            "checkinLabel": "وقت الدخول",
+            "checkoutLabel": "وقت الخروج",
+            "saveButton": "حفظ",
+            "checkoutError": "يجب أن يكون وقت الخروج بعد وقت الدخول.",
+            "addError": "حدث خطأ أثناء إضافة إدخال تتبع الوقت."
+          },
+          "editTimeTracking": {
+            "title": "تحرير تتبع الوقت",
+            "checkinLabel": "وقت الدخول",
+            "checkoutLabel": "وقت الخروج",
+            "updateButton": "تحديث",
+            "checkoutError": "يجب أن يكون وقت الخروج بعد وقت الدخول.",
+            "updateError": "حدث خطأ أثناء تحديث إدخال تتبع الوقت."
+          }
+      
+      
+  }
+  

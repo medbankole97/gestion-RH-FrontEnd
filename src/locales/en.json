@@ -1,0 +1,100 @@
+{
+    "login": {
+      "title": "Login",
+      "email": "Email",
+      "password": "Password",
+      "log_in_button": "Log In",
+      "successfully_authenticated": "Successfully Authenticated",
+      "logged_in_message": "You are now logged in!",
+      "forgot_password": "Forgot Password?"
+    },
+    "navbar": {
+      "users": "Users",
+      "timetracking": "Time Tracking",
+      "requestLeave": "Request Leave",
+      "typeLeave": "Type Leave",
+      "logout": "Logout",
+      "confirmLogout": "Are you sure you want to logout?",
+      "yesLogout": "Yes, logout"
+    },
+    "userList": {
+        "title": "User List",
+        "searchPlaceholder": "Search...",
+        "newUserButton": "New User",
+        "noData": "No data available",
+        "active": "Active",
+        "inactive": "Inactive",
+        "viewDetails": "View Details",
+        "editUser": "Edit User",
+        "deleteUser": "Delete User",
+        "deleteConfirmation": "Are you sure you want to delete this user?",
+        "userDeleted": "User deleted successfully!",
+        "deleteError": "Error deleting user.",
+        "fullname": "Full Name",
+        "email": "Email",
+        "role": "Role",
+        "status": "Status",
+        "action": "Action"
+      },
+      "userAdd": {
+        "title": "Add New User",
+        "fullname": "Full Name",
+        "fullnamePlaceholder": "At least 5 characters required!",
+        "email": "Email",
+        "emailPlaceholder": "Enter a valid email address",
+        "password": "Password",
+        "passwordPlaceholder": "Enter a secure password",
+        "role": "Role",
+        "rolePlaceholder": "Select a role",
+        "roleAdmin": "ADMIN",
+        "roleEmployee": "EMPLOYEE",
+        "roleManager": "MANAGER",
+        "status": "Active",
+        "cancelButton": "Cancel",
+        "addButton": "Add User",
+        "successMessage": "User added successfully!",
+        "errorMessage": "Failed to add user"
+      },
+      "userDetail": {
+        "title": "User Details",
+        "fullname": "Full Name",
+        "email": "Email",
+        "role": "Role",
+        "status": "Status",
+        "active": "Active",
+        "inactive": "Inactive",
+        "backToList": "Back to List"
+      },
+      "timeTrackingList": {
+        "title": "Time Tracking List",
+        "searchPlaceholder": "Search...",
+        "newTimeTrackingButton": "New Time Tracking",
+        "noDataMessage": "No data available",
+        "columns": {
+          "index": "#",
+          "checkinTime": "Check-in Time",
+          "checkoutTime": "Check-out Time",
+          "action": "Action"
+        },
+        "deleteConfirmation": "Are you sure you want to delete this time tracking?"
+      },
+      "addTimeTracking": {
+        "title": "Add New Time Tracking",
+        "checkinLabel": "Check-in Time",
+        "checkoutLabel": "Check-out Time",
+        "saveButton": "Save",
+        "checkoutError": "Checkout time must be after check-in time.",
+        "addError": "An error occurred while adding the time tracking entry."
+      },
+      "editTimeTracking": {
+        "title": "Edit Time Tracking",
+        "checkinLabel": "Check-in Time",
+        "checkoutLabel": "Check-out Time",
+        "updateButton": "Update",
+        "checkoutError": "Checkout time must be after check-in time.",
+        "updateError": "An error occurred while updating the time tracking entry."
+      }
+      
+
+  }
+  

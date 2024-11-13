@@ -2,48 +2,48 @@
   <div class="user-form-container">
     <div class="row mt-4">
       <div class="col-md-6 mx-auto">
-        <h3 class="text-center">Add New User</h3>
+        <h3 class="text-center">{{ $t('userAdd.title') }}</h3>
         <form @submit.prevent="onSubmit" class="form-card">
           <div class="mb-3">
-            <label for="fullname" class="form-label">Full Name</label>
+            <label for="fullname" class="form-label">{{ $t('userAdd.fullname') }}</label>
             <input
               type="text"
               class="form-control"
               id="fullname"
-              placeholder="At least 5 characters required!"
+              :placeholder="$t('userAdd.fullnamePlaceholder')"
               v-model="form.fullname"
               required
             />
           </div>
           <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
+            <label for="email" class="form-label">{{ $t('userAdd.email') }}</label>
             <input
               type="email"
               class="form-control"
               id="email"
-              placeholder="Enter a valid email address"
+              :placeholder="$t('userAdd.emailPlaceholder')"
               v-model="form.email"
               required
             />
           </div>
           <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
+            <label for="password" class="form-label">{{ $t('userAdd.password') }}</label>
             <input
               type="password"
               class="form-control"
               id="password"
-              placeholder="Enter a secure password"
+              :placeholder="$t('userAdd.passwordPlaceholder')"
               v-model="form.password"
               required
             />
           </div>
           <div class="mb-3">
-            <label for="role" class="form-label">Role</label>
+            <label for="role" class="form-label">{{ $t('userAdd.role') }}</label>
             <select class="form-control" id="role" v-model="form.role" required>
-              <option value="" disabled>Select a role</option>
-              <option value="ADMIN">ADMIN</option>
-              <option value="EMPLOYE">EMPLOYE</option>
-              <option value="MANAGER"> MANAGER</option>
+              <option value="" disabled>{{ $t('userAdd.rolePlaceholder') }}</option>
+              <option value="ADMIN">{{ $t('userAdd.roleAdmin') }}</option>
+              <option value="EMPLOYE">{{ $t('userAdd.roleEmployee') }}</option>
+              <option value="MANAGER">{{ $t('userAdd.roleManager') }}</option>
             </select>
           </div>
           <div class="mb-3 form-check">
@@ -53,13 +53,13 @@
               id="status"
               v-model="form.status"
             />
-            <label class="form-check-label" for="status">Active</label>
+            <label class="form-check-label" for="status">{{ $t('userAdd.status') }}</label>
           </div>
           <div class="d-flex justify-content-between">
             <router-link :to="{ name: 'list-user' }" class="btn btn-secondary">
-              <i class="fa-solid fa-arrow-left"></i> Cancel
+              <i class="fa-solid fa-arrow-left"></i> {{ $t('userAdd.cancelButton') }}
             </router-link>
-            <button class="btn btn-success">Add User</button>
+            <button class="btn btn-success">{{ $t('userAdd.addButton') }}</button>
           </div>
         </form>
       </div>

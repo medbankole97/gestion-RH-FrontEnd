@@ -1,10 +1,10 @@
 <template>
   <div class="edit-time-tracking-container">
-    <h2 class="text-center mb-4">Edit Time Tracking</h2>
+    <h2 class="text-center mb-4">{{ $t('editTimeTracking.title') }}</h2>
 
     <form @submit.prevent="updateTimeTracking">
       <div class="form-group mb-3">
-        <label for="checkin_time">Check-in Time</label>
+        <label for="checkin_time">{{ $t('editTimeTracking.checkinLabel') }}</label>
         <input
           id="checkin_time"
           type="datetime-local"
@@ -15,7 +15,7 @@
       </div>
 
       <div class="form-group mb-3">
-        <label for="checkout_time">Check-out Time</label>
+        <label for="checkout_time">{{ $t('editTimeTracking.checkoutLabel') }}</label>
         <input
           id="checkout_time"
           type="datetime-local"
@@ -25,7 +25,7 @@
         />
       </div>
 
-      <button type="submit" class="btn btn-dark mt-3">Update</button>
+      <button type="submit" class="btn btn-dark mt-3">{{ $t('editTimeTracking.updateButton') }}</button>
     </form>
   </div>
 </template>
@@ -52,7 +52,7 @@ onMounted(async () => {
 
 const updateTimeTracking = async () => {
   if (new Date(checkout_time.value) <= new Date(checkin_time.value)) {
-    alert("Checkout time must be after check-in time.");
+    alert($t("editTimeTracking.checkoutError"));
     return;
   }
 
@@ -64,7 +64,7 @@ const updateTimeTracking = async () => {
     router.push('/timetracking');
   } catch (error) {
     console.error('Error updating time tracking:', error);
-    alert('An error occurred while updating the time tracking entry.');
+    alert($t("editTimeTracking.updateError"));
   }
 };
 </script>

@@ -1,34 +1,34 @@
 <template>
   <div class="time-tracking-list-container">
-    <h2 class="text-center mb-4">Time Tracking List</h2>
+    <h2 class="text-center mb-4">{{ $t('timeTrackingList.title') }}</h2>
 
     <div class="actions-container d-flex flex-column flex-md-row justify-content-between mb-4">
       <input
-        type="text"
-        class="form-control mb-2 mb-md-0 w-50 search-input"
-        placeholder="Search..."
-        v-model="searchQuery"
-      />
+  type="text"
+  class="form-control mb-2 mb-md-0 w-50 search-input"
+  :placeholder="$t('timeTrackingList.searchPlaceholder')"
+  v-model="searchQuery"
+/>
 
-      <router-link to="/timetracking/new" class="btn btn-dark add-time-tracking-button">
-        <i class="fa-solid fa-plus"></i> New Time Tracking
-      </router-link>
+<router-link to="/timetracking/new" class="btn btn-dark add-time-tracking-button">
+  <i class="fa-solid fa-plus"></i> {{ $t('timeTrackingList.newTimeTrackingButton') }}
+</router-link>
     </div>
 
     <div class="table-responsive shadow-lg rounded">
       <table class="table table-hover table-bordered time-tracking-table">
         <thead class="table-header">
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Check-in Time</th>
-            <th scope="col">Check-out Time</th>
-            <th scope="col" class="text-center">Action</th>
-          </tr>
+    <th scope="col">{{ $t('timeTrackingList.columns.index') }}</th>
+    <th scope="col">{{ $t('timeTrackingList.columns.checkinTime') }}</th>
+    <th scope="col">{{ $t('timeTrackingList.columns.checkoutTime') }}</th>
+    <th scope="col" class="text-center">{{ $t('timeTrackingList.columns.action') }}</th>
+  </tr>
         </thead>
         <tbody>
           <tr v-if="filteredTimeTrackings.length === 0">
-            <td colspan="4" class="text-center">No data available</td>
-          </tr>
+  <td colspan="4" class="text-center">{{ $t('timeTrackingList.noDataMessage') }}</td>
+</tr>
           <tr v-for="(timeTracking, index) in filteredTimeTrackings" :key="timeTracking.id" class="table-row">
             <td scope="row">{{ index + 1 }}</td>
             <td>{{ timeTracking.checkin_time || 'N/A' }}</td>
@@ -44,11 +44,11 @@
                 class="text-warning me-2 cursor-pointer" 
                 @click="editTimeTracking(timeTracking.id)" 
               />
-              <font-awesome-icon 
+              <!-- <font-awesome-icon 
                 icon="trash" 
                 class="text-danger cursor-pointer" 
                 @click="remove(timeTracking.id)" 
-              />
+              /> -->
             </td>
           </tr>
         </tbody>
@@ -88,7 +88,7 @@ const editTimeTracking = (id) => {
 };
 
 const remove = async (id) => {
-  if (confirm("Are you sure you want to delete this time tracking?")) {
+  if (confirm($t("timeTrackingList.deleteConfirmation"))) {
     await timeTrackingStore.destroy(id);
   }
 };

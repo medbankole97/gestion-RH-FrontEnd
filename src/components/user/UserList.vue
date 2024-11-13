@@ -1,17 +1,17 @@
 <template>
   <div class="user-list-container">
-    <h2 class="text-center mb-4">User List</h2>
+    <h2 class="text-center mb-4">{{ $t('userList.title') }}</h2>
 
     <div class="actions-container d-flex flex-column flex-md-row justify-content-between mb-4">
       <input 
         type="text" 
         class="form-control mb-2 mb-md-0 w-50 search-input"
-        placeholder="Search..."
+        :placeholder="$t('userList.searchPlaceholder')"
         v-model="searchQuery"
       />
      
       <router-link :to="{ name: 'ajout-user' }" class="btn btn-dark add-user-button">
-        <i class="fa-solid fa-plus"></i> New User
+        <i class="fa-solid fa-plus"></i> {{ $t('userList.newUserButton') }}
       </router-link>
     </div>
 
@@ -20,16 +20,16 @@
         <thead class="table-header">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Fullname</th>
-            <th scope="col">Email</th>
-            <th scope="col">Role</th>
-            <th scope="col">Status</th>
-            <th scope="col" class="text-center">Action</th>
+            <th scope="col">{{ $t('userList.fullname') }}</th>
+            <th scope="col">{{ $t('userList.email') }}</th>
+            <th scope="col">{{ $t('userList.role') }}</th>
+            <th scope="col">{{ $t('userList.status') }}</th>
+            <th scope="col" class="text-center">{{ $t('userList.action') }}</th>
           </tr>
         </thead>
         <tbody>
           <tr v-if="filteredUsers.length === 0">
-            <td colspan="6" class="text-center">No data available</td>
+            <td colspan="6" class="text-center">{{ $t('userList.noData') }}</td>
           </tr>
           <tr v-for="(user, index) in filteredUsers" :key="user.id" class="table-row">
             <td scope="row">{{ index + 1 }}</td>
@@ -37,7 +37,7 @@
             <td>{{ user.email }}</td>
             <td>{{ user.role }}</td>
             <td :class="{'text-success': user.status, 'text-danger': !user.status}">
-              {{ user.status ? 'Active' : 'Inactive' }}
+              {{ user.status ? $t('userList.active') : $t('userList.inactive') }}
             </td>
             <td class="text-center action-icons">
               <font-awesome-icon 
@@ -67,12 +67,14 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore';
-import { useToast } from 'vue-toastification'; // Import Toast
+import { useToast } from 'vue-toastification';
+import { useI18n } from 'vue-i18n'; // Importer useI18n pour les traductions
 
-const router = useRouter(); 
+const router = useRouter();
 const store = useUserStore();
 const toast = useToast();
-const searchQuery = ref(""); 
+const { t } = useI18n(); // Obtenir la fonction de traduction
+const searchQuery = ref("");
 
 const filteredUsers = computed(() => {
   if (searchQuery.value) {
@@ -93,14 +95,14 @@ const editUser = (id) => {
 
 const remove = async (id) => {
   try {
-    const verify = window.confirm("Are you sure you want to delete this user?");
+    const verify = window.confirm(t('userList.deleteConfirmation')); // Utiliser t() pour la traduction
     if (verify) {
-      await store.destroy(id); 
+      await store.destroy(id);
       store.users = store.users.filter(user => user.id !== id);
-      toast.success("User deleted successfully!");
+      toast.success(t('userList.userDeleted')); // Utiliser t() pour la traduction
     }
   } catch (error) {
-    toast.error("Error deleting user.");
+    toast.error(t('userList.deleteError')); // Utiliser t() pour la traduction
     console.error("Error deleting user:", error.message);
   }
 };
@@ -177,5 +179,8 @@ onMounted(() => {
 
 .text-danger {
   font-weight: bold;
+}
+.cursor-pointer{
+  cursor: pointer;
 }
 </style>

@@ -1,0 +1,99 @@
+{
+    "login": {
+      "title": "Connexion",
+      "email": "E-mail",
+      "password": "Mot de passe",
+      "log_in_button": "Se connecter",
+      "successfully_authenticated": "Authentification réussie",
+      "logged_in_message": "Vous êtes maintenant connecté !",
+      "forgot_password": "Mot de passe oublié ?"
+    },
+    "navbar": {
+      "users": "Utilisateurs",
+      "timetracking": "Suivi du temps",
+      "requestLeave": "Demander un congé",
+      "typeLeave": "Type de congé",
+      "logout": "Déconnexion",
+      "confirmLogout": "Êtes-vous sûr de vouloir vous déconnecter ?",
+      "yesLogout": "Oui, se déconnecter"
+    },
+    "userList": {
+        "title": "Liste des utilisateurs",
+        "searchPlaceholder": "Rechercher...",
+        "newUserButton": "Nouvel utilisateur",
+        "noData": "Aucune donnée disponible",
+        "active": "Actif",
+        "inactive": "Inactif",
+        "viewDetails": "Voir les détails",
+        "editUser": "Modifier l'utilisateur",
+        "deleteUser": "Supprimer l'utilisateur",
+        "deleteConfirmation": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
+        "userDeleted": "Utilisateur supprimé avec succès !",
+        "deleteError": "Erreur lors de la suppression de l'utilisateur.",
+        "fullname": "Nom Complet",
+        "email": "Email",
+        "role": "Rôle",
+        "status": "Statut",
+        "action": "Action"
+      },
+      "userAdd": {
+        "title": "Ajouter un nouvel utilisateur",
+        "fullname": "Nom complet",
+        "fullnamePlaceholder": "Au moins 5 caractères requis !",
+        "email": "Email",
+        "emailPlaceholder": "Entrez une adresse e-mail valide",
+        "password": "Mot de passe",
+        "passwordPlaceholder": "Entrez un mot de passe sécurisé",
+        "role": "Rôle",
+        "rolePlaceholder": "Sélectionnez un rôle",
+        "roleAdmin": "ADMIN",
+        "roleEmployee": "EMPLOYÉ",
+        "roleManager": "MANAGER",
+        "status": "Actif",
+        "cancelButton": "Annuler",
+        "addButton": "Ajouter l'utilisateur",
+        "successMessage": "Utilisateur ajouté avec succès !",
+        "errorMessage": "Échec de l'ajout de l'utilisateur"
+      },
+      "userDetail": {
+        "title": "Détails de l'utilisateur",
+        "fullname": "Nom complet",
+        "email": "Email",
+        "role": "Rôle",
+        "status": "Statut",
+        "active": "Actif",
+        "inactive": "Inactif",
+        "backToList": "Retour à la liste"
+      },
+      "timeTrackingList": {
+        "title": "Liste de suivi du temps",
+        "searchPlaceholder": "Rechercher...",
+        "newTimeTrackingButton": "Nouveau suivi du temps",
+        "noDataMessage": "Aucune donnée disponible",
+        "columns": {
+          "index": "#",
+          "checkinTime": "Heure d'arrivée",
+          "checkoutTime": "Heure de départ",
+          "action": "Action"
+        },
+        "deleteConfirmation": "Êtes-vous sûr de vouloir supprimer ce suivi de temps ?"
+      },
+      "addTimeTracking": {
+        "title": "Ajouter un nouveau suivi du temps",
+        "checkinLabel": "Heure d'arrivée",
+        "checkoutLabel": "Heure de départ",
+        "saveButton": "Enregistrer",
+        "checkoutError": "L'heure de départ doit être après l'heure d'arrivée.",
+        "addError": "Une erreur s'est produite lors de l'ajout de l'entrée de suivi du temps."
+      },
+      "editTimeTracking": {
+        "title": "Modifier le suivi du temps",
+        "checkinLabel": "Heure d'arrivée",
+        "checkoutLabel": "Heure de départ",
+        "updateButton": "Mettre à jour",
+        "checkoutError": "L'heure de départ doit être après l'heure d'arrivée.",
+        "updateError": "Une erreur s'est produite lors de la mise à jour de l'entrée de suivi du temps."
+      }
+    
+  }
+  

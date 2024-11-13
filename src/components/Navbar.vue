@@ -14,7 +14,7 @@
               :class="['nav-link', { active: linkActive === 'list-user' }]"
               to="/user" @click="buttonFocus('list-user')"
             >
-              <i class="fa-solid fa-users"></i> Users
+              <i class="fa-solid fa-users"></i> {{ t('navbar.users') }}
             </router-link>
           </li>
           <li class="nav-item">
@@ -22,7 +22,7 @@
               :class="['nav-link', { active: linkActive === 'list-timetracking' }]"
               to="/timetracking" @click="buttonFocus('list-timetracking')"
             >
-              <i class="fas fa-clock"></i> Time Tracking
+              <i class="fas fa-clock"></i> {{ t('navbar.timetracking') }}
             </router-link>
           </li>
           <li class="nav-item">
@@ -30,7 +30,7 @@
               :class="['nav-link', { active: linkActive === 'list-request-leave' }]"
               to="/request-leave" @click="buttonFocus('list-request-leave')"
             >
-              <i class="fas fa-envelope"></i> Request Leave
+              <i class="fas fa-envelope"></i> {{ t('navbar.requestLeave') }}
             </router-link>
           </li>
           <li class="nav-item">
@@ -38,27 +38,38 @@
               :class="['nav-link', { active: linkActive === 'list-type-leave' }]"
               to="/type-leave" @click="buttonFocus('list-type-leave')"
             >
-              <i class="fas fa-list"></i> Type Leave
+              <i class="fas fa-list"></i> {{ t('navbar.typeLeave') }}
             </router-link>
           </li>
         </ul>
-        <h5>{{ authStore.user?.fullname }}</h5>
+
+        <!-- Sélecteur de langue -->
+        <select v-model="selectedLanguage" @change="changeLanguage" class="language-selector me-4">
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+          <option value="ar">عربي</option>
+        </select>
+
         <!-- Déconnexion à droite -->
         <button @click="logout" class="btn btn-outline-light logout-button">
-          <i class="fas fa-sign-out-alt"></i> Logout
+          <i class="fas fa-sign-out-alt"></i> {{ t('navbar.logout') }}
         </button>
       </div>
     </nav>
   </div>
 </template>
 
+
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from '../store/authStore';
+import { useI18n } from 'vue-i18n'; // Importez le module de traduction
 import Swal from 'sweetalert2';
 
 const authStore = useAuthStore();
+const { t, locale } = useI18n(); // Récupérez la fonction pour changer la langue
+const selectedLanguage = ref(locale.value); // Assignez la langue par défaut à l'option sélectionnée
 
 const linkActive = ref('list-user');
 const route = useRoute();
@@ -82,24 +93,27 @@ const buttonFocus = (val) => {
 
 const logout = () => {
   Swal.fire({
-    title: 'Are you sure you want to logout?',
+    title: t('navbar.confirmLogout'),
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#d33',
     cancelButtonColor: '#3085d6',
-    confirmButtonText: 'Yes, logout'
+    confirmButtonText: t('navbar.yesLogout')
   }).then((result) => {
     if (result.isConfirmed) {
       router.push('/');
     }
   });
 };
+const changeLanguage = () => {
+  locale.value = selectedLanguage.value; // Changez la langue de l'application
+};
 </script>
 
 <style scoped>
 /* Navbar custom styles */
 .custom-navbar {
-  background-color: #000; /* Fond noir */
+  background-color: #000;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -109,22 +123,20 @@ const logout = () => {
   margin-right: 15px;
 }
 
-/* Centrer le menu */
 .navbar-nav {
   display: flex;
   gap: 20px;
 }
 
-/* Couleurs et effets des liens */
 .nav-link {
-  color: #ffffff; /* Texte en blanc */
+  color: #ffffff;
   font-size: 1.1rem;
   font-weight: 500;
   transition: color 0.3s ease, transform 0.2s ease;
 }
 
 .nav-link.active {
-  color: #FFD700; /* Couleur dorée pour le lien actif */
+  color: #FFD700;
 }
 
 .nav-link:hover {
@@ -133,7 +145,6 @@ const logout = () => {
 }
 
 .logout-button {
-  margin-left: auto;
   color: #fff;
   border-color: #fff;
 }
@@ -143,7 +154,14 @@ const logout = () => {
   border-color: #FF6B6B;
 }
 
-/* Ajustement responsive */
+.language-selector {
+  margin-left: 15px;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  color: #000;
+}
+
 @media (max-width: 768px) {
   .navbar-nav {
     flex-direction: column;

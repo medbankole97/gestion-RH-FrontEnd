@@ -1,28 +1,27 @@
 <template>
   <div class="user-detail-container">
     <div class="card shadow-sm p-4">
-      <h3 class="text-center mb-4 user-detail-title">User Details</h3>
+      <h3 class="text-center mb-4 user-detail-title">{{ $t('userDetail.title') }}</h3>
       <div class="user-info">
-        <p><strong>Full Name:</strong> <span>{{ user.fullname }}</span></p>
-        <p><strong>Email:</strong> <span>{{ user.email }}</span></p>
-        <p><strong>Role:</strong> <span>{{ user.role }}</span></p>
+        <p><strong>{{ $t('userDetail.fullname') }}:</strong> <span>{{ user.fullname }}</span></p>
+        <p><strong>{{ $t('userDetail.email') }}:</strong> <span>{{ user.email }}</span></p>
+        <p><strong>{{ $t('userDetail.role') }}:</strong> <span>{{ user.role }}</span></p>
         <p>
-          <strong>Status:</strong>
-          <span
-            :class="{'badge-active': user.status, 'badge-inactive': !user.status}"
-          >
-            {{ user.status ? 'Active' : 'Inactive' }}
+          <strong>{{ $t('userDetail.status') }}:</strong>
+          <span :class="{'badge-active': user.status, 'badge-inactive': !user.status}">
+            {{ user.status ? $t('userDetail.active') : $t('userDetail.inactive') }}
           </span>
         </p>
       </div>
       <div class="text-center mt-4">
-        <router-link :to="{ name: 'list-user' }" class="btn btn-primary back-button">
-          <i class="fa-solid fa-arrow-left"></i> Back to List
+        <router-link :to="{ name: 'list-user' }" class="btn btn-dark back-button">
+          <i class="fa-solid fa-arrow-left"></i> {{ $t('userDetail.backToList') }}
         </router-link>
       </div>
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { ref, onMounted } from 'vue';

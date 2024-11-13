@@ -91,11 +91,12 @@ const onEdit = async () => {
 onMounted(async () => {
   try {
     const user = await store.getById(userId);
+    console.log("Fetched user:", user); // Ajoutez ceci pour voir si les données sont correctes
     if (user) {
       form.fullname = user.fullname;
       form.email = user.email;
       form.role = user.role;
-      form.status = user.status; // Assurez-vous de récupérer le statut ici
+      form.status = user.status;
     } else {
       toast.error("User not found.");
     }

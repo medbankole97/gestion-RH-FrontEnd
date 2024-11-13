@@ -1,31 +1,31 @@
 <template>
   <div class="add-time-tracking-container">
-    <h2 class="text-center mb-4">Add New Time Tracking</h2>
+    <h2 class="text-center mb-4">{{ $t('addTimeTracking.title') }}</h2>
 
     <form @submit.prevent="addTimeTracking">
-      <div class="form-group mb-3">
-        <label for="checkin_time">Check-in Time</label>
-        <input
-          id="checkin_time"
-          type="datetime-local"
-          v-model="checkin_time"
-          class="form-control"
-          required
-        />
-      </div>
+  <div class="form-group mb-3">
+    <label for="checkin_time">{{ $t('addTimeTracking.checkinLabel') }}</label>
+    <input
+      id="checkin_time"
+      type="datetime-local"
+      v-model="checkin_time"
+      class="form-control"
+      required
+    />
+  </div>
+  <div class="form-group mb-3">
+    <label for="checkout_time">{{ $t('addTimeTracking.checkoutLabel') }}</label>
+    <input
+      id="checkout_time"
+      type="datetime-local"
+      v-model="checkout_time"
+      class="form-control"
+      required
+    />
+  </div>
 
-      <div class="form-group mb-3">
-        <label for="checkout_time">Check-out Time</label>
-        <input
-          id="checkout_time"
-          type="datetime-local"
-          v-model="checkout_time"
-          class="form-control"
-          required
-        />
-      </div>
+  <button type="submit" class="btn btn-dark mt-3">{{ $t('addTimeTracking.saveButton') }}</button>
 
-      <button type="submit" class="btn btn-dark mt-3">Save</button>
     </form>
   </div>
 </template>
@@ -43,7 +43,7 @@ const checkout_time = ref('');
 
 const addTimeTracking = async () => {
   if (new Date(checkout_time.value) <= new Date(checkin_time.value)) {
-    alert("Checkout time must be after check-in time.");
+    alert($t("addTimeTracking.checkoutError"));
     return;
   }
 
@@ -55,7 +55,7 @@ const addTimeTracking = async () => {
     router.push('/timetracking');
   } catch (error) {
     console.error('Error adding time tracking:', error);
-    alert('An error occurred while adding the time tracking entry.');
+    alert($t("addTimeTracking.addError"));
   }
 };
 </script>
