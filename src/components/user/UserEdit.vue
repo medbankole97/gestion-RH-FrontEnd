@@ -5,33 +5,40 @@
         <h3 class="text-center">Edit User</h3>
         <form @submit.prevent="onEdit" class="form-card">
           <div class="mb-3">
-            <label for="fullname" class="form-label">Full Name</label>
-            <input
-              type="text"
-              class="form-control"
-              id="fullname"
-              v-model="form.fullname"
-            
-            />
-          </div>
-          <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input
-              type="email"
-              class="form-control"
-              id="email"
-              v-model="form.email"
-            
-            />
-          </div>
-          <div class="mb-3">
-            <label for="role" class="form-label">Role</label>
-            <select class="form-control" id="role" v-model="form.role">
-              <option value="ADMIN">ADMIN</option>
-              <option value="EMPLOYE">EMPLOYE</option>
-              <option value="MANAGER">MANAGER</option>
-            </select>
-          </div>
+  <label for="fullname" class="form-label">Full Name</label>
+  <input
+    type="text"
+    class="form-control"
+    id="fullname"
+    v-model="form.fullname"
+  />
+  <!-- Afficher l'erreur pour fullname -->
+  <div v-if="errors.fullname" class="text-danger mt-1">{{ errors.fullname }}</div>
+</div>
+
+<div class="mb-3">
+  <label for="email" class="form-label">Email</label>
+  <input
+    type="email"
+    class="form-control"
+    id="email"
+    v-model="form.email"
+  />
+  <!-- Afficher l'erreur pour email -->
+  <div v-if="errors.email" class="text-danger mt-1">{{ errors.email }}</div>
+</div>
+
+<div class="mb-3">
+  <label for="role" class="form-label">Role</label>
+  <select class="form-control" id="role" v-model="form.role">
+    <option value="ADMIN">ADMIN</option>
+    <option value="EMPLOYE">EMPLOYE</option>
+    <option value="MANAGER">MANAGER</option>
+  </select>
+  <!-- Afficher l'erreur pour role -->
+  <div v-if="errors.role" class="text-danger mt-1">{{ errors.role }}</div>
+</div>
+
           <div class="mb-3 form-check">
             <input
               type="checkbox"
@@ -71,6 +78,8 @@ const form = reactive({
   role: "",
   status: true // Ajoutez ici le statut avec `true` comme valeur par défaut
 });
+const errors = reactive({});
+
 
 const onEdit = async () => {
   try {
@@ -78,25 +87,38 @@ const onEdit = async () => {
       fullname: form.fullname,
       email: form.email,
       role: form.role,
-      status: form.status // Incluez le statut ici
+      status: form.status,
     });
     toast.success("User updated successfully!");
-    router.push({ name: 'list-user' });
+    router.push({ name: "list-user" });
   } catch (error) {
-    toast.error("Error updating user.");
-    console.error("Error updating user:", error);
+    if (error.response && error.response.data && error.response.data.errors) {
+      // Réinitialiser les erreurs
+      Object.keys(errors).forEach((key) => delete errors[key]);
+
+      // Parcourir les erreurs renvoyées par le backend
+      error.response.data.errors.forEach((err) => {
+        errors[err.path] = err.msg; // Utiliser `path` au lieu de `param`
+      });
+    } else {
+      toast.error("Error updating user.");
+      console.error("Error updating user:", error);
+    }
   }
 };
+
+
+
 
 onMounted(async () => {
   try {
     const user = await store.getById(userId);
     console.log("Fetched user:", user); // Ajoutez ceci pour voir si les données sont correctes
     if (user) {
-      form.fullname = user.fullname;
-      form.email = user.email;
-      form.role = user.role;
-      form.status = user.status;
+      form.fullname = user.user.fullname;
+      form.email = user.user.email;
+      form.role = user.user.role;
+      form.status = user.user.status;
     } else {
       toast.error("User not found.");
     }
@@ -167,6 +189,13 @@ h3 {
   background-color: #6c757d;
   color: white;
 }
+
+.text-danger {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 0.25rem;
+}
+
 
 @media (max-width: 576px) {
   .user-edit-container {

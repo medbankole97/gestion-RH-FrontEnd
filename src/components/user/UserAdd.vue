@@ -10,10 +10,14 @@
               type="text"
               class="form-control"
               id="fullname"
+              :class="{ 'is-invalid': errors.fullname }"
               :placeholder="$t('userAdd.fullnamePlaceholder')"
               v-model="form.fullname"
               required
             />
+            <div v-if="errors.fullname" class="invalid-feedback">
+              {{ errors.fullname }}
+            </div>
           </div>
           <div class="mb-3">
             <label for="email" class="form-label">{{ $t('userAdd.email') }}</label>
@@ -21,10 +25,14 @@
               type="email"
               class="form-control"
               id="email"
+              :class="{ 'is-invalid': errors.email }"
               :placeholder="$t('userAdd.emailPlaceholder')"
               v-model="form.email"
               required
             />
+            <div v-if="errors.email" class="invalid-feedback">
+              {{ errors.email }}
+            </div>
           </div>
           <div class="mb-3">
             <label for="password" class="form-label">{{ $t('userAdd.password') }}</label>
@@ -32,19 +40,32 @@
               type="password"
               class="form-control"
               id="password"
+              :class="{ 'is-invalid': errors.password }"
               :placeholder="$t('userAdd.passwordPlaceholder')"
               v-model="form.password"
               required
             />
+            <div v-if="errors.password" class="invalid-feedback">
+              {{ errors.password }}
+            </div>
           </div>
           <div class="mb-3">
             <label for="role" class="form-label">{{ $t('userAdd.role') }}</label>
-            <select class="form-control" id="role" v-model="form.role" required>
+            <select
+              class="form-control"
+              id="role"
+              :class="{ 'is-invalid': errors.role }"
+              v-model="form.role"
+              required
+            >
               <option value="" disabled>{{ $t('userAdd.rolePlaceholder') }}</option>
               <option value="ADMIN">{{ $t('userAdd.roleAdmin') }}</option>
               <option value="EMPLOYE">{{ $t('userAdd.roleEmployee') }}</option>
               <option value="MANAGER">{{ $t('userAdd.roleManager') }}</option>
             </select>
+            <div v-if="errors.role" class="invalid-feedback">
+              {{ errors.role }}
+            </div>
           </div>
           <div class="mb-3 form-check">
             <input
@@ -67,6 +88,7 @@
   </div>
 </template>
 
+
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -77,28 +99,45 @@ const userStore = useUserStore();
 const router = useRouter();
 const toast = useToast();
 
+// Form data
 const form = ref({
   fullname: '',
   email: '',
   password: '',
   role: '',
-  status: true
+  status: true,
 });
 
+// Errors object
+const errors = ref({});
+
+// Submit handler
 const onSubmit = async () => {
   try {
+    // Reset errors before submitting
+    errors.value = {};
+
     await userStore.store(form.value);
+
     toast.success("User added successfully!", {
       position: "top-right",
       timeout: 2000,
     });
     router.push({ name: 'list-user' });
   } catch (err) {
-    toast.error("Failed to add user", { position: "top-right", timeout: 2000 });
+    if (err.response && err.response.data && err.response.data.errors) {
+      // Map backend validation errors to local errors
+      err.response.data.errors.forEach((error) => {
+        errors.value[error.path] = error.msg;
+      });
+    } else {
+      toast.error("Failed to add user", { position: "top-right", timeout: 2000 });
+    }
     console.error("Error adding user:", err);
   }
 };
 </script>
+
 
 <style scoped>
 .user-form-container {
