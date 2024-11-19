@@ -1,22 +1,38 @@
 <template>
   <div class="request-leave-detail-container">
     <div class="card shadow-sm p-4">
-      <h3 class="text-center mb-4 request-leave-title">Request Leave Details</h3>
+      <h3 class="text-center mb-4 request-leave-title">{{ $t('requestLeave.details') }}</h3>
       <div class="request-leave-info">
-        <p><strong>Start Date:</strong> <span>{{ formattedStartDate }}</span></p>
-        <p><strong>End Date:</strong> <span>{{ formattedEndDate }}</span></p>
-        <p><strong>Motif:</strong> <span>{{ requestLeave.motif }}</span></p>
-        <p><strong>Status:</strong> <span>{{ requestLeave.status }}</span></p>
-        <p><strong>Type Leave:</strong> <span>{{ typeLeaveName }}</span></p>
+        <p>
+          <strong>{{ $t('requestLeave.startDate') }}:</strong> 
+          <span>{{ formattedStartDate }}</span>
+        </p>
+        <p>
+          <strong>{{ $t('requestLeave.endDate') }}:</strong> 
+          <span>{{ formattedEndDate }}</span>
+        </p>
+        <p>
+          <strong>{{ $t('requestLeave.motif') }}:</strong> 
+          <span>{{ requestLeave.motif }}</span>
+        </p>
+        <p>
+          <strong>{{ $t('requestLeave.status') }}:</strong> 
+          <span>{{ requestLeave.status }}</span>
+        </p>
+        <p>
+          <strong>{{ $t('requestLeave.typeLeave') }}:</strong> 
+          <span>{{ typeLeaveName }}</span>
+        </p>
       </div>
       <div class="text-center mt-4">
         <router-link :to="{ name: 'list-request-leave' }" class="btn btn-secondary back-button">
-          <i class="fa-solid fa-arrow-left"></i> Back to List
+          <i class="fa-solid fa-arrow-left"></i> {{ $t('requestLeave.backToList') }}
         </router-link>
       </div>
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';

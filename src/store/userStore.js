@@ -4,8 +4,8 @@ import { useAuthStore } from "./authStore"; // Importer authStore pour l'utilise
 
 export const useUserStore = defineStore("userStore", {
   state: () => ({
-    users: [],
-    currentUser: null,
+    users: [], // Liste des utilisateurs
+    currentUser: null, // Utilisateur connecté
     userForm: {
       fullname: null,
       email: null,
@@ -13,45 +13,80 @@ export const useUserStore = defineStore("userStore", {
       status: true,
       role: null,
     },
-    searchResults: [],
+    errors: {}, // Nouveau champ pour les erreurs
+    searchResults: [], // Résultats de recherche (si nécessaire)
   }),
+
   actions: {
+    // Charger les utilisateurs depuis l'API
     async loadDataFromApi() {
       try {
         const resp = await axios.get("http://localhost:5000/users");
         this.users = resp.data.users;
-        console.log(this.users);
       } catch (error) {
+        console.error("Error loading users:", error);
         this.users = [];
       }
     },
 
+    // Ajouter un nouvel utilisateur
     async store(user) {
-      return await axios.post("http://localhost:5000/auth/register", user);
+      this.errors = {}; // Réinitialise les erreurs avant l'appel
+      try {
+        await axios.post("http://localhost:5000/users", user);
+        await this.loadDataFromApi(); // Recharge les données après la création
+        return true; // Indique que l'opération a réussi
+      } catch (error) {
+        if (error.response && error.response.data.errors) {
+          this.errors = this.parseErrors(error.response.data.errors);
+          console.log(this.errors);
+        } else {
+          console.error("Unexpected error:", error);
+        }
+        throw error; // Rejette la promesse pour indiquer un échec
+      }
     },
+    
 
-    async update(id, user) {
-      const resp = await axios.put(`http://localhost:5000/users/${id}`, user);
-      await this.loadDataFromApi();
-      return resp;
-    },
+    
+ // Mettre à jour un utilisateur existant
+async update(id, user) {
+  this.errors = {}; // Réinitialise les erreurs avant l'appel
+  try {
+    const resp = await axios.put(`http://localhost:5000/users/${id}`, user);
+    await this.loadDataFromApi(); // Recharge les données après la mise à jour
+    return resp; // Retourne la réponse pour indiquer le succès
+  } catch (error) {
+    if (error.response && error.response.data.errors) {
+      // Capture et parse les erreurs
+      this.errors = this.parseErrors(error.response.data.errors);
+      console.log(this.errors); // Débogage : Affiche les erreurs au besoin
+    } else {
+      console.error("Unexpected error:", error);
+    }
+    throw error; // Rejette la promesse pour signaler un échec
+  }
+},
 
+
+    // Supprimer un utilisateur
     async destroy(id) {
-      await axios.delete(`http://localhost:5000/users/${id}`);
-      await this.loadDataFromApi();
+      try {
+        await axios.delete(`http://localhost:5000/users/${id}`);
+        await this.loadDataFromApi();
+      } catch (error) {
+        console.error("Error deleting user:", error);
+      }
     },
 
+    // Récupérer les détails d'un utilisateur par son ID
     async getById(id) {
-      const resp = await axios.get(`http://localhost:5000/users/${id}`);
-      return resp.data;
-    },
-
-    resetForm() {
-      this.userForm.fullname = null;
-      this.userForm.email = null;
-      this.userForm.password = null;
-      this.userForm.status = true;
-      this.userForm.role = null;
+      try {
+        const resp = await axios.get(`http://localhost:5000/users/${id}`);
+        return resp.data;
+      } catch (error) {
+        console.error("Error fetching user by ID:", error);
+      }
     },
 
     // Récupérer les données de l'utilisateur connecté
@@ -64,8 +99,34 @@ export const useUserStore = defineStore("userStore", {
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
-        throw new Error("Could not fetch user data.");
+
       }
+    },
+
+    // Parse les erreurs renvoyées par le backend
+    parseErrors(errorArray) {
+      const parsed = {};
+      errorArray.forEach((err) => {
+        parsed[err.path] = err.msg; // Stocke chaque erreur par son chemin (ex: fullname, email)
+      });
+      return parsed;
+    },
+
+    // Réinitialiser les erreurs
+    resetErrors() {
+      this.errors = {};
+    },
+
+    // Réinitialiser le formulaire et les erreurs
+    resetForm() {
+      this.userForm = {
+        fullname: null,
+        email: null,
+        password: null,
+        status: true,
+        role: null,
+      };
+      this.resetErrors();
     },
   },
 });

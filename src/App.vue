@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <!-- Affiche Navbar si la route n'est pas la page de connexion -->
-    <Navbar v-if="$route.name !== 'login'" />
+   <!-- Affiche Navbar sauf sur les pages login et forgot-password -->
+   <Navbar v-if="$route.name !== 'login' && $route.name !== 'ForgotPassword' && $route.name !== 'ResetPassword'" />
+
     
     <router-view />
   </div>

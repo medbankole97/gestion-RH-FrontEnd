@@ -1,15 +1,17 @@
 <template>
   <div class="detail-time-tracking-container">
-    <h2 class="text-center mb-4">Time Tracking Details</h2>
+    <h2 class="text-center mb-4">{{ $t('timeTracking.details') }}</h2>
 
     <div class="detail-item">
-      <strong>Check-in Time:</strong> {{ formattedCheckinTime }}
+      <strong>{{ $t('timeTracking.checkinTime') }}:</strong> {{ formattedCheckinTime }}
     </div>
     <div class="detail-item">
-      <strong>Check-out Time:</strong> {{ formattedCheckoutTime }}
+      <strong>{{ $t('timeTracking.checkoutTime') }}:</strong> {{ formattedCheckoutTime }}
     </div>
 
-    <button @click="goBack" class="btn btn-secondary mt-3">Back</button>
+    <button @click="goBack" class="btn btn-secondary mt-3">
+      {{ $t('timeTracking.back') }}
+    </button>
   </div>
 </template>
 

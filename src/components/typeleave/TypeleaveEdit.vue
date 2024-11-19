@@ -1,33 +1,35 @@
 <template>
   <div class="container-fluid">
-    <h2 class="text-center mb-4">Edit Type Leave</h2>
+    <h2 class="text-center mb-4">{{ $t('editTypeLeave.title') }}</h2>
 
-    <div class="d-flex justify-content-center"> <!-- Wrapper pour le centrage -->
+    <div class="d-flex justify-content-center">
+      <!-- Wrapper pour le centrage -->
       <form @submit.prevent="onSubmit" class="form-container">
         <div class="mb-3">
-          <label for="name" class="form-label">Type Leave Name</label>
+          <label for="name" class="form-label">{{ $t('editTypeLeave.typeLeaveName') }}</label>
           <input
             type="text"
             id="name"
             class="form-control"
             v-model="form.name"
-            placeholder="Enter type leave name"
+            :placeholder="$t('editTypeLeave.placeholder')"
             required
           />
         </div>
-        
+
         <div class="d-flex justify-content-between">
           <router-link :to="{ name: 'list-type-leave' }" class="btn btn-secondary">
-            <i class="fa-solid fa-arrow-left"></i> Cancel
+            <i class="fa-solid fa-arrow-left"></i> {{ $t('editTypeLeave.cancel') }}
           </router-link>
           <button type="submit" class="btn btn-success">
-            <i class="fa-solid fa-save"></i> Save Changes
+            <i class="fa-solid fa-save"></i> {{ $t('editTypeLeave.saveChanges') }}
           </button>
         </div>
       </form>
     </div>
   </div>
 </template>
+
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
@@ -50,7 +52,7 @@ const loadTypeLeave = async () => {
     form.value.name = typeLeave.name;
   } catch (error) {
     console.error('Error loading type leave:', error);
-    toast.error('Could not load type leave data.');
+    toast.error($t('editTypeLeave.errorLoading'));
   }
 };
 
@@ -66,9 +68,11 @@ const onSubmit = async () => {
   }
 };
 
+
 // Charger les données lorsque le composant est monté
 onMounted(loadTypeLeave);
 </script>
+
 <style scoped>
 .container-fluid {
   padding: 20px 2em;
@@ -86,7 +90,6 @@ onMounted(loadTypeLeave);
   max-width: 500px; /* Largeur maximale du formulaire */
   padding: 2em;
   background-color: #f9f9f9;
-  /* border-radius: 8px; */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -102,20 +105,10 @@ onMounted(loadTypeLeave);
 .form-control {
   padding: 0.75rem;
   font-size: 1rem;
-  /* border-radius: 5px; */
-  border: 1px solid #ced4da;
-}
-
-.form-select {
-  padding: 0.75rem;
-  /* font-size: 1rem; */
-  /* border-radius: 5px; */
   border: 1px solid #ced4da;
 }
 
 .btn {
-  /* border-radius: 20px; */
-  /* padding: 0.75rem 1.5rem; */
   font-size: 1rem;
 }
 

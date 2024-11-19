@@ -1,9 +1,9 @@
 <template>
   <div class="request-leave-form-container">
-    <h3 class="text-center mb-4">Edit Request Leave</h3>
+    <h3 class="text-center mb-4">{{ $t('editRequestLeave') }}</h3>
     <form @submit.prevent="onEdit" class="form-card">
       <div class="mb-3">
-        <label for="start_date" class="form-label">Start Date</label>
+        <label for="start_date" class="form-label">{{ $t('startDate') }}</label>
         <input
           type="date"
           class="form-control"
@@ -13,7 +13,7 @@
         />
       </div>
       <div class="mb-3">
-        <label for="end_date" class="form-label">End Date</label>
+        <label for="end_date" class="form-label">{{ $t('endDate') }}</label>
         <input
           type="date"
           class="form-control"
@@ -23,30 +23,30 @@
         />
       </div>
       <div class="mb-3">
-        <label for="motif" class="form-label">Motif</label>
+        <label for="motif" class="form-label">{{ $t('motif') }}</label>
         <textarea
           class="form-control"
           id="motif"
           v-model="form.motif"
-          placeholder="Enter reason for leave"
+          :placeholder="$t('reasonPlaceholder')"
           required
         ></textarea>
       </div>
       <div class="mb-3">
-        <label for="status" class="form-label">Status</label>
+        <label for="status" class="form-label">{{ $t('status') }}</label>
         <select
           class="form-control"
           id="status"
           v-model="form.status"
           required
         >
-          <option value="PENDING">PENDING</option>
-          <option value="APPROVED">APPROVED</option>
-          <option value="REJECTED">REJECTED</option>
+          <option value="PENDING">{{ $t('pending') }}</option>
+          <option value="APPROVED">{{ $t('approved') }}</option>
+          <option value="REJECTED">{{ $t('rejected') }}</option>
         </select>
       </div>
       <div class="mb-3">
-        <label for="typeLeaveId" class="form-label">Type Leave</label>
+        <label for="typeLeaveId" class="form-label">{{ $t('typeLeave') }}</label>
         <select
           class="form-control"
           id="typeLeaveId"
@@ -60,9 +60,9 @@
       </div>
       <div class="d-flex justify-content-between">
         <router-link :to="{ name: 'list-request-leave' }" class="btn btn-secondary">
-          <i class="fa-solid fa-arrow-left"></i> Cancel
+          <i class="fa-solid fa-arrow-left"></i> {{ $t('cancel') }}
         </router-link>
-        <button type="submit" class="btn btn-success">Save Changes</button>
+        <button type="submit" class="btn btn-success">{{ $t('saveChanges') }}</button>
       </div>
     </form>
   </div>
@@ -70,11 +70,15 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useRequestLeaveStore } from '@/store/requestLeaveStore';
 import { useTypeLeaveStore } from '@/store/typeLeaveStore';
 import { useToast } from 'vue-toastification';
 import { useRoute, useRouter } from 'vue-router';
+import { format } from 'date-fns';
 
+
+const { t } = useI18n();
 const requestLeaveStore = useRequestLeaveStore();
 const typeLeaveStore = useTypeLeaveStore();
 const toast = useToast();
@@ -94,10 +98,10 @@ const typeLeaves = ref([]);
 const onEdit = async () => {
   try {
     await requestLeaveStore.update(route.params.id, form.value);
-    toast.success("Request Leave updated successfully");
+    toast.success(t('toast.updateSuccess'));
     router.push({ name: 'list-request-leave' });
   } catch (error) {
-    toast.error("Error updating request leave");
+    toast.error(t('toast.updateError'));
   }
 };
 
@@ -107,7 +111,11 @@ onMounted(async () => {
 
   const requestLeave = await requestLeaveStore.getById(route.params.id);
   if (requestLeave) {
-    form.value = { ...requestLeave };
+    form.value = {
+      ...requestLeave,
+      start_date: format(new Date(requestLeave.start_date), 'yyyy-MM-dd'), // Convertir la date
+      end_date: format(new Date(requestLeave.end_date), 'yyyy-MM-dd'),     // Convertir la date
+    };
   }
 });
 </script>

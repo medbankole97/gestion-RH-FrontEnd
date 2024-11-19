@@ -1,9 +1,9 @@
 <template>
   <div class="request-leave-form-container">
-    <h3 class="text-center mb-4">Add New Request Leave</h3>
+    <h3 class="text-center mb-4">{{ $t('newRequestLeave') }}</h3>
     <form @submit.prevent="onSubmit" class="form-card">
       <div class="mb-3">
-        <label for="start_date" class="form-label">Start Date</label>
+        <label for="start_date" class="form-label">{{ $t('startDate') }}</label>
         <input
           type="date"
           class="form-control"
@@ -13,7 +13,7 @@
         />
       </div>
       <div class="mb-3">
-        <label for="end_date" class="form-label">End Date</label>
+        <label for="end_date" class="form-label">{{ $t('endDate') }}</label>
         <input
           type="date"
           class="form-control"
@@ -23,17 +23,17 @@
         />
       </div>
       <div class="mb-3">
-        <label for="motif" class="form-label">Motif</label>
+        <label for="motif" class="form-label">{{ $t('motif') }}</label>
         <textarea
           class="form-control"
           id="motif"
           v-model="form.motif"
-          placeholder="Enter reason for leave"
+          :placeholder="$t('searchPlaceholder')"
           required
         ></textarea>
       </div>
       <div class="mb-3">
-        <label for="status" class="form-label">Status</label>
+        <label for="status" class="form-label">{{ $t('status') }}</label>
         <select
           class="form-control"
           id="status"
@@ -41,13 +41,13 @@
           :disabled="isEmployee"
           required
         >
-          <option value="PENDING"> PENDING</option>
-          <option value="APPROVED">APPROVED</option>
-          <option value="REJECTED">REJECTED</option>
+          <option value="PENDING">{{ $t('pending') }}</option>
+          <option value="APPROVED">{{ $t('approved') }}</option>
+          <option value="REJECTED">{{ $t('rejected') }}</option>
         </select>
       </div>
       <div class="mb-3">
-        <label for="typeLeaveId" class="form-label">Type Leave</label>
+        <label for="typeLeaveId" class="form-label">{{ $t('typeLeave') }}</label>
         <select
           class="form-control"
           id="typeLeaveId"
@@ -61,25 +61,26 @@
       </div>
       <div class="d-flex justify-content-between">
         <router-link :to="{ name: 'list-request-leave' }" class="btn btn-secondary">
-          <i class="fa-solid fa-arrow-left"></i> Cancel
+          <i class="fa-solid fa-arrow-left"></i> {{ $t('action') }}
         </router-link>
-        <button type="submit" class="btn btn-success">Add Request Leave</button>
+        <button type="submit" class="btn btn-success">{{ $t('newRequestLeave') }}</button>
       </div>
     </form>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRequestLeaveStore } from '@/store/requestLeaveStore';
 import { useTypeLeaveStore } from '@/store/typeLeaveStore';
-import { useAuthStore } from '@/store/authStore';
 import { useToast } from 'vue-toastification';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n(); // Import pour la traduction
 
 const requestLeaveStore = useRequestLeaveStore();
 const typeLeaveStore = useTypeLeaveStore();
-const authStore = useAuthStore();
 const toast = useToast();
 const router = useRouter();
 
@@ -96,10 +97,10 @@ const typeLeaves = ref([]);
 const onSubmit = async () => {
   try {
     await requestLeaveStore.store(form.value);
-    toast.success("Request Leave added successfully");
-    router.push({ name: 'list-request-leave' }); // Redirection vers la liste après ajout
+    toast.success(t('addSuccess')); // Message de succès traduit
+    router.push({ name: 'list-request-leave' });
   } catch (error) {
-    toast.error("Error adding request leave");
+    toast.error(t('addError')); // Message d'erreur traduit
   }
 };
 
@@ -108,7 +109,6 @@ onMounted(async () => {
   typeLeaves.value = typeLeaveStore.typeLeaves;
 });
 </script>
-
 
 <style scoped>
 /* Styles conservés sans modification */

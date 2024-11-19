@@ -1,17 +1,17 @@
 <template>
   <div class="type-leave-list-container">
-    <h2 class="text-center mb-4">Type Leave List</h2>
+    <h2 class="text-center mb-4">{{ $t('typeLeaves.title') }}</h2>
 
     <div class="actions-container d-flex flex-column flex-md-row justify-content-between mb-4">
-      <input 
-        type="text" 
+      <input
+        type="text"
         class="form-control mb-2 mb-md-0 w-50 search-input"
-        placeholder="Search..."
+        :placeholder="$t('typeLeaves.searchPlaceholder')"
         v-model="searchQuery"
       />
 
       <router-link to="/type-leave/new" class="btn btn-dark add-type-leave-button">
-        <i class="fa-solid fa-plus"></i> New Type Leave
+        <i class="fa-solid fa-plus"></i> {{ $t('typeLeaves.newTypeLeave') }}
       </router-link>
     </div>
 
@@ -19,34 +19,38 @@
       <table class="table table-hover table-bordered type-leave-table">
         <thead class="table-header">
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col" class="text-center">Action</th>
+            <th scope="col">{{ $t('typeLeaves.table.number') }}</th>
+            <th scope="col">{{ $t('typeLeaves.table.name') }}</th>
+            <th scope="col" class="text-center">{{ $t('typeLeaves.table.action') }}</th>
           </tr>
         </thead>
         <tbody>
           <tr v-if="filteredTypeLeaves.length === 0">
-            <td colspan="3" class="text-center">No data available</td>
+            <td colspan="3" class="text-center">{{ $t('typeLeaves.table.noData') }}</td>
           </tr>
           <tr v-for="(typeLeave, index) in filteredTypeLeaves" :key="typeLeave.id" class="table-row">
             <td scope="row">{{ index + 1 }}</td>
             <td>{{ typeLeave.name }}</td>
             <td class="text-center action-icons">
-              <font-awesome-icon 
-                icon="eye" 
-                class="text-info me-2 cursor-pointer" 
-                @click="viewDetails(typeLeave)" 
+              <font-awesome-icon
+                icon="eye"
+                class="text-info me-2 cursor-pointer"
+                @click="viewDetails(typeLeave)"
+                :title="$t('typeLeaves.actions.view')"
               />
-              <font-awesome-icon 
-                icon="edit" 
-                class="text-warning me-2 cursor-pointer" 
-                @click="editTypeLeave(typeLeave.id)" 
+              <font-awesome-icon
+                icon="edit"
+                class="text-warning me-2 cursor-pointer"
+                @click="editTypeLeave(typeLeave.id)"
+                :title="$t('typeLeaves.actions.edit')"
               />
-              <font-awesome-icon 
-                icon="trash" 
-                class="text-danger cursor-pointer" 
-                @click="remove(typeLeave.id)" 
-              />
+              <font-awesome-icon
+                  icon="trash"
+                  class="text-danger cursor-pointer"
+                  @click="remove(typeLeave.id)"
+                  :title="$t('typeLeaves.actions.delete')"
+                />
+
             </td>
           </tr>
         </tbody>
@@ -60,9 +64,13 @@ import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useTypeLeaveStore } from '@/store/typeleaveStore';
 
-const router = useRouter(); 
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n(); 
+
+const router = useRouter();
 const typeLeaveStore = useTypeLeaveStore();
-const searchQuery = ref(""); 
+const searchQuery = ref("");
 
 const filteredTypeLeaves = computed(() => {
   if (searchQuery.value) {
@@ -74,7 +82,6 @@ const filteredTypeLeaves = computed(() => {
 });
 
 const viewDetails = (typeLeave) => {
-  console.log("Viewing details for:", typeLeave);
   router.push({ name: 'detail-typeleave', params: { id: typeLeave.id } });
 };
 
@@ -84,10 +91,10 @@ const editTypeLeave = (id) => {
 
 const remove = async (id) => {
   try {
-    const verify = window.confirm("Are you sure you want to delete this type leave?");
+    const verify = window.confirm(t('typeLeaves.actions.deleteConfirm')); // Utilisez t au lieu de $t
     if (verify) {
-      await typeLeaveStore.destroy(id); 
-      typeLeaveStore.typeLeaves = typeLeaveStore.typeLeaves.filter(typeLeave => typeLeave.id !== id);
+      await typeLeaveStore.destroy(id);
+      await typeLeaveStore.loadDataFromApi(); // Recharger après suppression
     }
   } catch (error) {
     console.error("Error deleting type leave:", error.message);
@@ -98,6 +105,7 @@ onMounted(() => {
   typeLeaveStore.loadDataFromApi();
 });
 </script>
+
 
 <style scoped>
 .type-leave-list-container {

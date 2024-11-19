@@ -93,7 +93,91 @@
         "updateButton": "Mettre à jour",
         "checkoutError": "L'heure de départ doit être après l'heure d'arrivée.",
         "updateError": "Une erreur s'est produite lors de la mise à jour de l'entrée de suivi du temps."
-      }
+      },
+      "requestLeaveList": "Liste de demandes de congés",
+      "searchPlaceholder": "Rechercher...",
+      "newRequestLeave": "Nouvelle demande de congé",
+      "startDate": "Date de début",
+      "endDate": "Date de fin",
+      "motif": "Motif",
+      "status": "Statut",
+      "typeLeave": "Type de congé",
+      "action": "Action",
+      "noData": "Aucune donnée disponible",
+      "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette demande de congé ?",
+      "deleteSuccess": "Demande de congé supprimée avec succès!",
+      "deleteError": "Erreur lors de la suppression de la demande de congé. Veuillez réessayer.",
+      "approved": "Approuvé",
+      "rejected": "Rejeté",
+      "pending": "En attente",
+      "editRequestLeave": "Modifier la demande de congé",
+      "reasonPlaceholder": "Saisir la raison du congé",
+      "cancel": "Annuler",
+      "saveChanges": "Enregistrer les modifications",
+      "toast": {
+        "updateSuccess": "Demande de congé mise à jour avec succès",
+        "updateError": "Erreur lors de la mise à jour de la demande de congé"
     
+      },
+      "requestLeave": {
+        "details": "Détails de la demande de congé",
+        "startDate": "Date de début",
+        "endDate": "Date de fin",
+        "motif": "Motif",
+        "status": "Statut",
+        "typeLeave": "Type de congé",
+        "backToList": "Retour à la liste"
+      },
+      "timeTracking": {
+        "details": "Détails du suivi du temps",
+        "checkinTime": "Heure d'arrivée",
+        "checkoutTime": "Heure de départ",
+        "back": "Retour"
+      },
+      "typeLeaves": {
+        "title": "Liste des types de congé",
+        "searchPlaceholder": "Rechercher...",
+        "newTypeLeave": "Nouveau type de congé",
+        "table": {
+          "number": "#",
+          "name": "Nom",
+          "action": "Action",
+          "noData": "Aucune donnée disponible"
+        },
+        "actions": {
+          "view": "Voir",
+          "edit": "Modifier",
+          "delete": "Supprimer",
+          "deleteConfirm": "Êtes-vous sûr de vouloir supprimer ce type de congé ?"
+        }
+      },
+      "typeLeavess": {
+        "addNew": "Ajouter un nouveau type de congé",
+        "cancel": "Annuler",
+        "add": "Ajouter le type de congé",
+        "nameLabel": "Nom du congé",
+        "successMessage": "Type de congé ajouté avec succès !",
+        "errorMessage": "Échec de l'ajout du type de congé. Veuillez réessayer."
+      },
+      "editTypeLeave": {
+        "title": "Modifier le Type de Congé",
+        "typeLeaveName": "Nom du Type de Congé",
+        "placeholder": "Entrez le nom du type de congé",
+        "cancel": "Annuler",
+        "saveChanges": "Enregistrer les modifications",
+        "errorLoading": "Impossible de charger les données du type de congé.",
+        "errorUpdating": "Impossible de mettre à jour le type de congé. Veuillez réessayer.",
+        "successMessage": "Type de congé mis à jour avec succès"
+      },
+      "typeLeavesss": {
+        "details": {
+          "title": "Détails du type de congé",
+          "name": "Nom",
+          "loading": "Chargement des détails du type de congé..."
+        }
+      },
+      "buttons": {
+        "backToList": "Retour à la liste"
+      }
   }
   

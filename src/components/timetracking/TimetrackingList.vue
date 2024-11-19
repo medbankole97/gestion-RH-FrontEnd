@@ -44,11 +44,11 @@
                 class="text-warning me-2 cursor-pointer" 
                 @click="editTimeTracking(timeTracking.id)" 
               />
-              <!-- <font-awesome-icon 
+              <font-awesome-icon 
                 icon="trash" 
                 class="text-danger cursor-pointer" 
                 @click="remove(timeTracking.id)" 
-              /> -->
+              />
             </td>
           </tr>
         </tbody>
@@ -61,7 +61,9 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useTimeTrackingStore } from '@/store/timetrackingStore';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const router = useRouter();
 const timeTrackingStore = useTimeTrackingStore();
 const searchQuery = ref("");
@@ -88,7 +90,7 @@ const editTimeTracking = (id) => {
 };
 
 const remove = async (id) => {
-  if (confirm($t("timeTrackingList.deleteConfirmation"))) {
+  if (confirm(t("timeTrackingList.deleteConfirmation"))) {
     await timeTrackingStore.destroy(id);
   }
 };

@@ -23,6 +23,9 @@
       required
     />
   </div>
+  <router-link to="/timetracking" class="btn btn-dark mt-3 me-2">
+  Cancel
+</router-link>
 
   <button type="submit" class="btn btn-dark mt-3">{{ $t('addTimeTracking.saveButton') }}</button>
 

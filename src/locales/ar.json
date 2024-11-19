@@ -86,6 +86,15 @@
             "checkoutError": "يجب أن يكون وقت الخروج بعد وقت الدخول.",
             "addError": "حدث خطأ أثناء إضافة إدخال تتبع الوقت."
           },
+          "requestLeave": {
+            "details": "تفاصيل طلب الإجازة",
+            "startDate": "تاريخ البداية",
+            "endDate": "تاريخ النهاية",
+            "motif": "السبب",
+            "status": "الحالة",
+            "typeLeave": "نوع الإجازة",
+            "backToList": "العودة إلى القائمة"
+          },
           "editTimeTracking": {
             "title": "تحرير تتبع الوقت",
             "checkinLabel": "وقت الدخول",
@@ -93,8 +102,82 @@
             "updateButton": "تحديث",
             "checkoutError": "يجب أن يكون وقت الخروج بعد وقت الدخول.",
             "updateError": "حدث خطأ أثناء تحديث إدخال تتبع الوقت."
-          }
+          },
+          "requestLeaveList": "قائمة طلبات الإجازة",
+          "searchPlaceholder": "البحث...",
+          "newRequestLeave": "طلب إجازة جديد",
+          "startDate": "تاريخ البداية",
+          "endDate": "تاريخ النهاية",
+          "motif": "السبب",
+          "status": "الحالة",
+          "typeLeave": "نوع الإجازة",
+          "action": "الإجراء",
+          "noData": "لا توجد بيانات متاحة",
+          "confirmDelete": "هل أنت متأكد أنك تريد حذف طلب الإجازة هذا؟",
+          "deleteSuccess": "تم حذف طلب الإجازة بنجاح!",
+          "deleteError": "خطأ في حذف طلب الإجازة. يرجى المحاولة مرة أخرى.",
+          "editRequestLeave": "تعديل طلب الإجازة",
+          "reasonPlaceholder": "أدخل سبب الإجازة",
+          "pending": "قيد الانتظار",
+          "approved": "موافق عليه",
+          "rejected": "مرفوض",
+          "cancel": "إلغاء",
+          "saveChanges": "حفظ التغييرات",
+          "toast": {
+            "updateSuccess": "تم تحديث طلب الإجازة بنجاح",
+            "updateError": "خطأ في تحديث طلب الإجازة"
       
-      
+  },
+  "timeTracking": {
+    "details": "تفاصيل تتبع الوقت",
+    "checkinTime": "وقت تسجيل الدخول",
+    "checkoutTime": "وقت تسجيل الخروج",
+    "back": "عودة"
+  },
+  "typeLeaves": {
+    "title": "قائمة أنواع الإجازات",
+    "searchPlaceholder": "ابحث...",
+    "newTypeLeave": "نوع إجازة جديد",
+    "table": {
+      "number": "#",
+      "name": "الاسم",
+      "action": "الإجراء",
+      "noData": "لا توجد بيانات متاحة"
+    },
+    "actions": {
+      "view": "عرض",
+      "edit": "تعديل",
+      "delete": "حذف",
+      "deleteConfirm": "هل أنت متأكد أنك تريد حذف هذا النوع من الإجازة؟"
+    }
+  },
+  "typeLeavess": {
+    "addNew": "إضافة نوع جديد للإجازة",
+    "cancel": "إلغاء",
+    "add": "إضافة نوع الإجازة",
+    "nameLabel": "اسم الإجازة",
+    "successMessage": "تمت إضافة نوع الإجازة بنجاح!",
+    "errorMessage": "فشل في إضافة نوع الإجازة. يرجى المحاولة مرة أخرى."
+  },
+  "editTypeLeave": {
+    "title": "تعديل نوع الإجازة",
+    "typeLeaveName": "اسم نوع الإجازة",
+    "placeholder": "أدخل اسم نوع الإجازة",
+    "cancel": "إلغاء",
+    "saveChanges": "حفظ التعديلات",
+    "errorLoading": "تعذر تحميل بيانات نوع الإجازة.",
+    "errorUpdating": "تعذر تحديث نوع الإجازة. حاول مرة أخرى.",
+    "successMessage": "تم تحديث نوع الإجازة بنجاح"
+  },
+  "typeLeavesss": {
+    "details": {
+      "title": "تفاصيل نوع الإجازة",
+      "name": "الاسم",
+      "loading": "جاري تحميل تفاصيل نوع الإجازة..."
+    }
+  },
+  "buttons": {
+    "backToList": "العودة إلى القائمة"
   }
+}
   

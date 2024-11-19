@@ -1,11 +1,11 @@
 <template>
   <div class="container-fluid">
-    <h2 class="text-center mb-4">Add New Type Leave</h2>
+    <h2 class="text-center mb-4">{{ $t('typeLeavess.addNew') }}</h2>
 
     <div class="d-flex justify-content-center"> <!-- Wrapper pour le centrage -->
       <form @submit.prevent="handleSubmit" class="form-container">
         <div class="mb-3">
-          <label for="name" class="form-label">Leave Name</label>
+          <label for="name" class="form-label">{{ $t('typeLeavess.nameLabel') }}</label>
           <input
             type="text"
             id="name"
@@ -15,36 +15,42 @@
           />
         </div>
 
-        <!-- Champ 'User' supprimé -->
-
-        <router-link to="/list-type-leave" class="btn btn-secondary me-2"> <i class="fa-solid fa-arrow-left"></i> Cancel</router-link>
-        <button type="submit" class="btn btn-success">Add Type Leave</button>
-        
+        <router-link to="/type-leave" class="btn btn-secondary me-2">
+          <i class="fa-solid fa-arrow-left"></i> {{ $t('typeLeavess.cancel') }}
+        </router-link>
+        <button type="submit" class="btn btn-success">{{ $t('typeLeavess.add') }}</button>
       </form>
     </div>
   </div>
 </template>
+
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
 import { useTypeLeaveStore } from '@/store/typeleaveStore';
 
 const router = useRouter();
+const toast = useToast();
 const typeLeaveStore = useTypeLeaveStore();
 
 const typeLeaveForm = ref({
-  name: '', // 'userId' supprimé
+  name: '',
 });
 
 const handleSubmit = async () => {
   try {
     await typeLeaveStore.store(typeLeaveForm.value);
+    toast.success($t('typeLeavess.successMessage'));
     router.push({ name: 'list-type-leave' });
   } catch (error) {
     console.error("Error adding type leave:", error);
+    toast.error($t('typeLeavess.errorMessage'));
   }
 };
 </script>
+
+
 <style scoped>
 .container-fluid {
   padding: 20px 2em;
@@ -54,7 +60,6 @@ const handleSubmit = async () => {
 
 .d-flex {
   min-height: 10vh;
-  /* align-items: center;  */
 }
 
 .form-container {
@@ -62,7 +67,6 @@ const handleSubmit = async () => {
   max-width: 500px; /* Largeur maximale du formulaire */
   padding: 2em;
   background-color: #f9f9f9;
-  /* border-radius: 8px; */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -78,19 +82,10 @@ const handleSubmit = async () => {
 .form-control {
   padding: 0.75rem;
   font-size: 1rem;
-  /* border-radius: 5px; */
-  border: 1px solid #ced4da;
-}
-
-.form-select {
-  padding: 0.75rem;
-  font-size: 1rem;
-  /* border-radius: 5px; */
   border: 1px solid #ced4da;
 }
 
 .btn {
-  /* border-radius: 20px; */
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
 }
