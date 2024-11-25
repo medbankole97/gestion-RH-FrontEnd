@@ -38,13 +38,13 @@
                 @click="viewDetails(typeLeave)"
                 :title="$t('typeLeaves.actions.view')"
               />
-              <font-awesome-icon
+              <font-awesome-icon  v-if="userRoles === 'ADMIN' "
                 icon="edit"
                 class="text-warning me-2 cursor-pointer"
                 @click="editTypeLeave(typeLeave.id)"
                 :title="$t('typeLeaves.actions.edit')"
               />
-              <font-awesome-icon
+              <font-awesome-icon  v-if="userRoles === 'ADMIN' "
                   icon="trash"
                   class="text-danger cursor-pointer"
                   @click="remove(typeLeave.id)"
@@ -65,12 +65,15 @@ import { useRouter } from 'vue-router';
 import { useTypeLeaveStore } from '@/store/typeleaveStore';
 
 import { useI18n } from 'vue-i18n';
+import { useAuthStore } from '../../store/authStore';
 
 const { t } = useI18n(); 
 
 const router = useRouter();
 const typeLeaveStore = useTypeLeaveStore();
 const searchQuery = ref("");
+const authStore = useAuthStore();
+const userRoles = ref(authStore.user.role);
 
 const filteredTypeLeaves = computed(() => {
   if (searchQuery.value) {

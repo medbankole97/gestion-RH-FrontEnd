@@ -25,12 +25,19 @@ import TimetrackingList from '@/components/timetracking/TimetrackingList.vue';
 import TimetrackingAdd from '@/components/timetracking/TimetrackingAdd.vue';
 import TimetrackingEdit from '@/components/timetracking/TimetrackingEdit.vue';
 import TimetrackingDetail from '@/components/timetracking/TimetrackingDetail.vue';
+import Home from '@/components/Home.vue';
 
 const routes = [
     {
         path: "/",
         name: 'login',
         component: Login,
+    },
+    {
+        path: "/home-page",
+        name: 'home',
+        component: Home,
+        meta: { requiresAuth: true },
     },
     // Section utilisateur
     {
@@ -39,6 +46,7 @@ const routes = [
         component: UserList,
         meta: { requiresAuth: true },
     },
+   
     {
         path: "/user/new",
         name: 'ajout-user',
@@ -136,13 +144,13 @@ const routes = [
         path: "/forgot-password",
         name: 'ForgotPassword',
         component: ForgotPassword,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: false },
     },
     {
         path: "/reset-password",
         name: 'ResetPassword',
         component: ResetPassword,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: false },
     },
 
 ];

@@ -139,6 +139,7 @@ const onSubmit = async () => {
 </script>
 
 
+
 <style scoped>
 .user-form-container {
   padding: 20px;
@@ -205,4 +206,13 @@ h3 {
     padding: 10px;
   }
 }
+.invalid-feedback {
+  color: #e74c3c;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+.is-invalid {
+  border-color: #e74c3c;
+}
+
 </style>

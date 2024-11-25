@@ -1,40 +1,44 @@
 <template>
-  <div class="add-time-tracking-container">
+  <div class="add-time-tracking-container mt-5">
     <h2 class="text-center mb-4">{{ $t('addTimeTracking.title') }}</h2>
 
     <form @submit.prevent="addTimeTracking">
-  <div class="form-group mb-3">
-    <label for="checkin_time">{{ $t('addTimeTracking.checkinLabel') }}</label>
-    <input
-      id="checkin_time"
-      type="datetime-local"
-      v-model="checkin_time"
-      class="form-control"
-      required
-    />
-  </div>
-  <div class="form-group mb-3">
-    <label for="checkout_time">{{ $t('addTimeTracking.checkoutLabel') }}</label>
-    <input
-      id="checkout_time"
-      type="datetime-local"
-      v-model="checkout_time"
-      class="form-control"
-      required
-    />
-  </div>
-  <router-link to="/timetracking" class="btn btn-dark mt-3 me-2">
-  Cancel
-</router-link>
+      <div class="form-group mb-3">
+        <label for="checkin_time">{{ $t('addTimeTracking.checkinLabel') }}</label>
+        <input
+          id="checkin_time"
+          type="datetime-local"
+          v-model="checkin_time"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group mb-3">
+        <label for="checkout_time">{{ $t('addTimeTracking.checkoutLabel') }}</label>
+        <input
+          id="checkout_time"
+          type="datetime-local"
+          v-model="checkout_time"
+          class="form-control"
+          required
+        />
+      </div>
+      <router-link to="/timetracking" class="btn btn-dark mt-3 me-2">
+        <i class="fa-solid fa-arrow-left"></i> {{ $t('cancel') }}
+      </router-link>
 
-  <button type="submit" class="btn btn-dark mt-3">{{ $t('addTimeTracking.saveButton') }}</button>
-
+      <button
+        type="submit"
+        class="btn btn-dark mt-3"
+        :disabled="!isValidDateRange"
+      >
+        {{ $t('addTimeTracking.saveButton') }}
+      </button>
     </form>
   </div>
 </template>
-
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useTimeTrackingStore } from '@/store/timetrackingStore';
 
@@ -44,9 +48,18 @@ const timeTrackingStore = useTimeTrackingStore();
 const checkin_time = ref('');
 const checkout_time = ref('');
 
+// Vérification de la validité de la plage de dates
+const isValidDateRange = computed(() => {
+  return (
+    new Date(checkout_time.value) > new Date(checkin_time.value) &&
+    checkin_time.value !== '' &&
+    checkout_time.value !== ''
+  );
+});
+
 const addTimeTracking = async () => {
-  if (new Date(checkout_time.value) <= new Date(checkin_time.value)) {
-    alert($t("addTimeTracking.checkoutError"));
+  if (!isValidDateRange.value) {
+    alert($t('addTimeTracking.checkoutError'));
     return;
   }
 
@@ -58,10 +71,11 @@ const addTimeTracking = async () => {
     router.push('/timetracking');
   } catch (error) {
     console.error('Error adding time tracking:', error);
-    alert($t("addTimeTracking.addError"));
+    alert($t('addTimeTracking.addError'));
   }
 };
 </script>
+
 
 <style scoped>
 .add-time-tracking-container {

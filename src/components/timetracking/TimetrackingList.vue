@@ -39,12 +39,12 @@
                 class="text-info me-2 cursor-pointer" 
                 @click="viewTimeTracking(timeTracking.id)" 
               />
-              <font-awesome-icon 
+              <font-awesome-icon  v-if="userRoles === 'ADMIN' "
                 icon="edit" 
                 class="text-warning me-2 cursor-pointer" 
                 @click="editTimeTracking(timeTracking.id)" 
               />
-              <font-awesome-icon 
+              <font-awesome-icon  v-if="userRoles === 'ADMIN' "
                 icon="trash" 
                 class="text-danger cursor-pointer" 
                 @click="remove(timeTracking.id)" 
@@ -63,10 +63,16 @@ import { useRouter } from 'vue-router';
 import { useTimeTrackingStore } from '@/store/timetrackingStore';
 import { useI18n } from 'vue-i18n';
 
+import { useAuthStore } from '../../store/authStore';
+// const store = useUserStore();
+
 const { t } = useI18n();
 const router = useRouter();
 const timeTrackingStore = useTimeTrackingStore();
 const searchQuery = ref("");
+
+const authStore = useAuthStore();
+const userRoles = ref(authStore.user.role);
 
 onMounted(() => {
   timeTrackingStore.loadDataFromApi();

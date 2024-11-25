@@ -64,7 +64,7 @@ form {
 input[type="email"] {
   padding: 10px;
   margin-bottom: 1rem;
-  border: 2px solid #26a49c;
+  border: 2px solid #000c;
   border-radius: 5px;
   font-size: 1rem;
   color: #242d32;
@@ -73,16 +73,16 @@ input[type="email"] {
 }
 
 input[type="email"]::placeholder {
-  color: #aaa;
+  color: #000;
 }
 
 input[type="email"]:focus {
-  border-color: #26a49c;
-  box-shadow: 0 0 5px rgba(38, 164, 156, 0.5);
+  border-color: #000;
+  box-shadow: 0 0 5px rgba(3, 9, 9, 0.5);
 }
 
 button {
-  background-color: #26a49c;
+  background-color: #000;
   color: #fff;
   padding: 10px;
   border: none;

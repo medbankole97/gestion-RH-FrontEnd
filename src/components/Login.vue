@@ -63,7 +63,7 @@ const login = async () => {
       timer: 1500
     });
 
-    router.push('/Navbar');
+    router.push('/home-page');
   } catch (err) {
     error.value = err.message;
   }

@@ -75,7 +75,7 @@ form {
 input[type="password"] {
   padding: 10px;
   margin-bottom: 1rem;
-  border: 2px solid #26a49c;
+  border: 2px solid #000;
   border-radius: 5px;
   font-size: 1rem;
   color: #242d32;
@@ -84,16 +84,16 @@ input[type="password"] {
 }
 
 input[type="password"]::placeholder {
-  color: #aaa;
+  color: #000;
 }
 
 input[type="password"]:focus {
-  border-color: #26a49c;
-  box-shadow: 0 0 5px rgba(38, 164, 156, 0.5);
+  border-color: #000;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 button {
-  background-color: #26a49c;
+  background-color: #000;
   color: #fff;
   padding: 10px;
   border: none;
@@ -105,7 +105,7 @@ button {
 }
 
 button:hover {
-  background-color: #1e8e85;
+  background-color: #000;
 }
 
 .message {

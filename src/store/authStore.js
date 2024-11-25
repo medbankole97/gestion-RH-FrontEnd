@@ -17,6 +17,8 @@ export const useAuthStore = defineStore("auth", {
         this.token = accessToken;
         this.user = user;
         localStorage.setItem('authToken', accessToken);
+        localStorage.setItem('authUser', JSON.stringify(user));
+
         
 
         // Ajout de l'authentification dans les headers d'axios
@@ -34,18 +36,35 @@ export const useAuthStore = defineStore("auth", {
       this.user = null;
       this.token = null;
       localStorage.removeItem("authToken");
+      localStorage.removeItem("authUser");
       delete axios.defaults.headers.common["Authorization"];
     },
 
     checkAuth() {
-      const token = localStorage.getItem("authToken");
-      if (token) {
-        this.isAuthenticated = true;
-        this.token = token;
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      } else {
+      try {
+        const token = localStorage.getItem("authToken");
+        const user = localStorage.getItem("authUser");
+    
+        console.log("Token récupéré :", token);
+        console.log("Utilisateur récupéré :", user);
+    
+        if (token && user) {
+          this.isAuthenticated = true;
+          this.token = token;
+          this.user = JSON.parse(user);
+          axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        } else {
+          this.isAuthenticated = false;
+          this.token = null;
+          this.user = null;
+        }
+      } catch (error) {
+        console.error("Erreur dans checkAuth :", error);
         this.isAuthenticated = false;
+        this.token = null;
+        this.user = null;
       }
     },
+    
   },
 });

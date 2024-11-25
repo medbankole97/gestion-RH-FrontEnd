@@ -69,12 +69,16 @@ import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore';
 import { useToast } from 'vue-toastification';
 import { useI18n } from 'vue-i18n'; // Importer useI18n pour les traductions
+import { useAuthStore } from '../../store/authStore';
 
 const router = useRouter();
 const store = useUserStore();
 const toast = useToast();
 const { t } = useI18n(); // Obtenir la fonction de traduction
 const searchQuery = ref("");
+
+const authStore = useAuthStore();
+const userRoles = ref(authStore.user.role);
 
 const filteredUsers = computed(() => {
   if (searchQuery.value) {

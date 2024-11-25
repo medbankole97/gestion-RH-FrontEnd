@@ -9,7 +9,7 @@
           class="form-control"
           id="start_date"
           v-model="form.start_date"
-          required
+          required disabled
         />
       </div>
       <div class="mb-3">
@@ -19,7 +19,7 @@
           class="form-control"
           id="end_date"
           v-model="form.end_date"
-          required
+          required disabled
         />
       </div>
       <div class="mb-3">
@@ -29,7 +29,7 @@
           id="motif"
           v-model="form.motif"
           :placeholder="$t('reasonPlaceholder')"
-          required
+          required disabled
         ></textarea>
       </div>
       <div class="mb-3">
@@ -51,7 +51,7 @@
           class="form-control"
           id="typeLeaveId"
           v-model="form.typeLeaveId"
-          required
+          required disabled
         >
           <option v-for="typeLeave in typeLeaves" :key="typeLeave.id" :value="typeLeave.id">
             {{ typeLeave.name }}

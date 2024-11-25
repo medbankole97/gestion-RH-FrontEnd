@@ -46,12 +46,12 @@
                 class="text-info me-2 cursor-pointer" 
                 @click="viewDetails(requestLeave)" 
               />
-              <font-awesome-icon 
+              <font-awesome-icon  v-if="userRoles === 'MANAGER' "
                 icon="edit" 
                 class="text-warning me-2 cursor-pointer" 
                 @click="editRequestLeave(requestLeave.id)" 
               />
-              <font-awesome-icon 
+              <font-awesome-icon  v-if="userRoles === 'ADMIN' "
                 icon="trash" 
                 class="text-danger cursor-pointer" 
                 @click="remove(requestLeave.id)" 
@@ -71,6 +71,7 @@ import { useToast } from 'vue-toastification';
 import { useRequestLeaveStore } from '@/store/requestleaveStore';
 import { useTypeLeaveStore } from '@/store/typeleaveStore';
 import { useI18n } from 'vue-i18n';
+import { useAuthStore } from '../../store/authStore';
 
 const { t } = useI18n();
 const router = useRouter();
@@ -78,6 +79,8 @@ const toast = useToast();
 const requestLeaveStore = useRequestLeaveStore();
 const typeLeaveStore = useTypeLeaveStore();
 const searchQuery = ref("");
+const authStore = useAuthStore();
+const userRoles = ref(authStore.user.role);
 
 // Filtrer les demandes de congé en fonction de la recherche
 const filteredRequestLeaves = computed(() => {
@@ -187,4 +190,12 @@ onMounted(() => {
 .action-icons .cursor-pointer:hover {
   transform: scale(1.1);
 }
+.text-success {
+  font-weight: bold;
+}
+
+.text-danger , .text-warning{
+  font-weight: bold;
+}
+
 </style>

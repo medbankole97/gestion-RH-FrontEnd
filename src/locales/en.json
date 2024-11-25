@@ -9,6 +9,10 @@
       "forgot_password": "Forgot Password?"
     },
     "navbar": {
+      "home": "Home",
+      "welcome": "Welcome!",
+      "description": "Discover our modern and efficient HR management platform. Use the menu to access features.",
+      "explore": "Explore",
       "users": "Users",
       "timetracking": "Time Tracking",
       "requestLeave": "Request Leave",
@@ -34,7 +38,8 @@
         "email": "Email",
         "role": "Role",
         "status": "Status",
-        "action": "Action"
+        "action": "Action",
+        "accessDenied": "You do not have permission to perform this action."
       },
       "userAdd": {
         "title": "Add New User",
@@ -143,7 +148,10 @@
         "saveChanges": "Save Changes",
         "errorLoading": "Could not load type leave data.",
         "errorUpdating": "Could not update type leave. Please try again.",
-        "successMessage": "Type Leave updated successfully"
+        "successMessage": "Type Leave updated successfully",
+        "endDateError": "The end date must be later than the start date.",
+  "addSuccess": "Request added successfully.",
+  "addError": "An error occurred while adding the request."
       },
       "typeLeavesss": {
         "details": {

@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+  <div class="d-flex justify-content-center mt-5" >
     <div class="card" style="width: 18rem;">
       <div class="card-body">
         <h3 class="card-title text-center mb-4">{{ $t('typeLeavesss.details.title') }}</h3>

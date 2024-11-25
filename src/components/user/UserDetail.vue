@@ -105,7 +105,7 @@ onMounted(async () => {
 
 .badge-inactive {
   color: #dc3545;
-  font-weight: bold;
+  font-weight: bolder;
 }
 
 .back-button {
@@ -117,5 +117,6 @@ onMounted(async () => {
 .back-button i {
   margin-right: 5px;
 }
+
 </style>
 

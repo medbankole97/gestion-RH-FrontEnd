@@ -9,8 +9,19 @@
 
         <!-- Menu centré -->
         <ul class="navbar-nav mx-auto">
+            <!-- Lien vers la page Accueil -->
+  <li class="nav-item">
+    <router-link
+      :class="['nav-link', { active: linkActive === 'home' }]"
+      to="/home-page"
+      @click="buttonFocus('home')"
+    >
+      <i class="fas fa-home"></i> {{ t('navbar.home') }}
+    </router-link>
+  </li>
+
           <li class="nav-item">
-            <router-link
+            <router-link  v-if="userRoles === 'ADMIN' "
               :class="['nav-link', { active: linkActive === 'list-user' }]"
               to="/user" @click="buttonFocus('list-user')"
             >
@@ -79,9 +90,11 @@ const authStore = useAuthStore();
 const { t, locale } = useI18n(); // Récupérer la fonction pour changer la langue
 const selectedLanguage = ref(locale.value); // Langue par défaut
 
-const linkActive = ref('list-user');
+const linkActive = ref('home');
 const route = useRoute();
 const router = useRouter();
+
+const userRoles = ref(authStore.user.role);
 
 onMounted(() => {
   // Vérifie si l'utilisateur est authentifié au chargement de la navbar
@@ -93,8 +106,11 @@ onMounted(() => {
     linkActive.value = 'list-request-leave';
   } else if (route.name === 'list-type-leave') {
     linkActive.value = 'list-type-leave';
-  } else {
+  } else if (route.name === 'list-user') {
     linkActive.value = 'list-user';
+  } 
+  else {
+    linkActive.value = 'home';
   }
 });
 

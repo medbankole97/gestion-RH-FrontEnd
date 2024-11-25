@@ -9,6 +9,10 @@
       "forgot_password": "Mot de passe oublié ?"
     },
     "navbar": {
+      "home": "Accueil",
+      "welcome": "Bienvenue !",
+      "description": "Découvrez notre plateforme de gestion RH moderne et efficace. Utilisez le menu pour accéder aux fonctionnalités.",
+      "explore": "Explorer",
       "users": "Utilisateurs",
       "timetracking": "Suivi du temps",
       "requestLeave": "Demander un congé",
@@ -34,7 +38,11 @@
         "email": "Email",
         "role": "Rôle",
         "status": "Statut",
-        "action": "Action"
+        "action": "Action",
+        "accessDenied": "Vous n'avez pas les droits pour effectuer cette action.",
+        "endDateError": "La date de fin doit être postérieure à la date de début.",
+        "addSuccess": "Demande ajoutée avec succès.",
+        "addError": "Une erreur s'est produite lors de l'ajout de la demande."
       },
       "userAdd": {
         "title": "Ajouter un nouvel utilisateur",

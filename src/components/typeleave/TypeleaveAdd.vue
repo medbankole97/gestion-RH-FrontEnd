@@ -30,6 +30,9 @@ import { useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
 import { useTypeLeaveStore } from '@/store/typeleaveStore';
 
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n(); 
 const router = useRouter();
 const toast = useToast();
 const typeLeaveStore = useTypeLeaveStore();
@@ -41,7 +44,7 @@ const typeLeaveForm = ref({
 const handleSubmit = async () => {
   try {
     await typeLeaveStore.store(typeLeaveForm.value);
-    toast.success($t('typeLeavess.successMessage'));
+    toast.success(t('typeLeavess.successMessage'));
     router.push({ name: 'list-type-leave' });
   } catch (error) {
     console.error("Error adding type leave:", error);

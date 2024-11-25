@@ -30,6 +30,23 @@ export const useUserStore = defineStore("userStore", {
     },
 
     // Ajouter un nouvel utilisateur
+    // async store(user) {
+    //   this.errors = {}; 
+    //   try {
+    //     await axios.post("http://localhost:5000/users", user);
+    //     await this.loadDataFromApi(); 
+    //     return true;
+    //   } catch (error) {
+    //     if (error.response && error.response.data.errors) {
+    //       this.errors = this.parseErrors(error.response.data.errors);
+    //       throw error; 
+    //     } else {
+    //       console.error("Unexpected error:", error);
+    //       throw error;
+    //     }
+    //   }
+    // },
+
     async store(user) {
       this.errors = {}; // Réinitialise les erreurs avant l'appel
       try {
@@ -49,25 +66,24 @@ export const useUserStore = defineStore("userStore", {
     
 
     
- // Mettre à jour un utilisateur existant
-async update(id, user) {
-  this.errors = {}; // Réinitialise les erreurs avant l'appel
-  try {
-    const resp = await axios.put(`http://localhost:5000/users/${id}`, user);
-    await this.loadDataFromApi(); // Recharge les données après la mise à jour
-    return resp; // Retourne la réponse pour indiquer le succès
-  } catch (error) {
-    if (error.response && error.response.data.errors) {
-      // Capture et parse les erreurs
-      this.errors = this.parseErrors(error.response.data.errors);
-      console.log(this.errors); // Débogage : Affiche les erreurs au besoin
-    } else {
-      console.error("Unexpected error:", error);
-    }
-    throw error; // Rejette la promesse pour signaler un échec
-  }
-},
 
+    // Mettre à jour un utilisateur existant
+    async update(id, user) {
+      this.errors = {}; // Réinitialise les erreurs
+      try {
+        const resp = await axios.put(`http://localhost:5000/users/${id}`, user);
+        await this.loadDataFromApi(); // Recharge les données après mise à jour
+        return resp.data; // Retourner les données pour confirmation
+      } catch (error) {
+        if (error.response?.data?.errors) {
+          this.errors = this.parseErrors(error.response.data.errors);
+        } else {
+          console.error("Unexpected error:", error);
+        }
+        throw error; // Relance l'erreur pour le composant
+      }
+    },
+    
 
     // Supprimer un utilisateur
     async destroy(id) {

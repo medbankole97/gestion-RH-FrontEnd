@@ -12,6 +12,7 @@
 import { onMounted } from 'vue';
 import { useAuthStore } from '@/store/authStore';
 import Navbar from '@/components/Navbar.vue';
+import Home from '@/components/Home.vue';
 
 // Récupère le store d'authentification
 const authStore = useAuthStore();

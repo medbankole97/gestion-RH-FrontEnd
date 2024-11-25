@@ -21,6 +21,9 @@
           v-model="form.end_date"
           required
         />
+        <div v-if="!isValidDateRange" class="text-danger mt-1">
+          {{ $t('endDateError') }}
+        </div>
       </div>
       <div class="mb-3">
         <label for="motif" class="form-label">{{ $t('motif') }}</label>
@@ -54,30 +57,40 @@
           v-model="form.typeLeaveId"
           required
         >
-          <option v-for="typeLeave in typeLeaves" :key="typeLeave.id" :value="typeLeave.id">
+          <option
+            v-for="typeLeave in typeLeaves"
+            :key="typeLeave.id"
+            :value="typeLeave.id"
+          >
             {{ typeLeave.name }}
           </option>
         </select>
       </div>
       <div class="d-flex justify-content-between">
         <router-link :to="{ name: 'list-request-leave' }" class="btn btn-secondary">
-          <i class="fa-solid fa-arrow-left"></i> {{ $t('action') }}
+          <i class="fa-solid fa-arrow-left"></i> {{ $t('cancel') }}
         </router-link>
-        <button type="submit" class="btn btn-success">{{ $t('newRequestLeave') }}</button>
+        <button
+          type="submit"
+          class="btn btn-success"
+          :disabled="!isValidDateRange"
+        >
+          {{ $t('newRequestLeave') }}
+        </button>
       </div>
     </form>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRequestLeaveStore } from '@/store/requestLeaveStore';
 import { useTypeLeaveStore } from '@/store/typeLeaveStore';
 import { useToast } from 'vue-toastification';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
-const { t } = useI18n(); // Import pour la traduction
+const { t } = useI18n();
 
 const requestLeaveStore = useRequestLeaveStore();
 const typeLeaveStore = useTypeLeaveStore();
@@ -89,18 +102,30 @@ const form = ref({
   end_date: '',
   motif: '',
   status: 'PENDING',
-  typeLeaveId: null
+  typeLeaveId: null,
 });
 
 const typeLeaves = ref([]);
 
+// Validation des dates
+const isValidDateRange = computed(() => {
+  const startDate = new Date(form.value.start_date);
+  const endDate = new Date(form.value.end_date);
+  return !form.value.start_date || !form.value.end_date || endDate > startDate;
+});
+
 const onSubmit = async () => {
+  if (!isValidDateRange.value) {
+    toast.error(t('endDateError'));
+    return;
+  }
+
   try {
     await requestLeaveStore.store(form.value);
-    toast.success(t('addSuccess')); // Message de succès traduit
+    toast.success(t('addSuccess'));
     router.push({ name: 'list-request-leave' });
   } catch (error) {
-    toast.error(t('addError')); // Message d'erreur traduit
+    toast.error(t('addError'));
   }
 };
 
@@ -109,6 +134,7 @@ onMounted(async () => {
   typeLeaves.value = typeLeaveStore.typeLeaves;
 });
 </script>
+
 
 <style scoped>
 /* Styles conservés sans modification */
