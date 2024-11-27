@@ -80,6 +80,8 @@
         "noDataMessage": "Aucune donnée disponible",
         "columns": {
           "index": "#",
+          "user": "Nom Complet",
+          "email": "E-mail",
           "checkinTime": "Heure d'arrivée",
           "checkoutTime": "Heure de départ",
           "action": "Action"
@@ -105,6 +107,8 @@
       "requestLeaveList": "Liste de demandes de congés",
       "searchPlaceholder": "Rechercher...",
       "newRequestLeave": "Nouvelle demande de congé",
+      "user": "Nom Complet",
+          "email": "E-mail",
       "startDate": "Date de début",
       "endDate": "Date de fin",
       "motif": "Motif",

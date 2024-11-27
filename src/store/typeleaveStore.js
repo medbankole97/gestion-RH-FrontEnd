@@ -1,5 +1,6 @@
 import axios from "axios";
 import { defineStore } from "pinia";
+import { useAuthStore } from "./authStore"; // Si nécessaire, importer authStore pour l'utiliser dans typeLeaveStore
 
 export const useTypeLeaveStore = defineStore("typeLeaveStore", {
   state: () => ({
@@ -7,6 +8,7 @@ export const useTypeLeaveStore = defineStore("typeLeaveStore", {
     typeLeaveForm: {
       name: null,
     },
+    errors: {}, // Nouveau champ pour stocker les erreurs
   }),
 
   actions: {
@@ -17,32 +19,44 @@ export const useTypeLeaveStore = defineStore("typeLeaveStore", {
         this.typeLeaves = resp.data.typeLeaves;
         console.log("Loaded type leaves:", this.typeLeaves);
       } catch (error) {
-        this.typeLeaves = [];
         console.error("Error loading type leaves:", error);
+        this.typeLeaves = [];
       }
     },
 
-    // Créer un nouveau type de congé sans vérifier l'authentification
+    // Créer un nouveau type de congé
     async store(typeLeave) {
+      this.errors = {}; // Réinitialise les erreurs avant l'appel
       try {
         const resp = await axios.post("http://localhost:5000/type-leaves", typeLeave);
-
         // Recharger les données après ajout
         await this.loadDataFromApi();
-        return resp;
+        return resp; // Retourne la réponse si l'ajout a réussi
       } catch (error) {
-        console.error("Error adding type leave:", error);
+        if (error.response && error.response.data.errors) {
+          this.errors = this.parseErrors(error.response.data.errors);
+          console.log(this.errors); // Affiche les erreurs dans la console
+        } else {
+          console.error("Unexpected error:", error);
+        }
+        throw error; // Relance l'erreur pour le composant
       }
     },
 
     // Mettre à jour un type de congé
     async update(id, typeLeave) {
+      this.errors = {}; // Réinitialise les erreurs
       try {
         const resp = await axios.put(`http://localhost:5000/type-leaves/${id}`, typeLeave);
         await this.loadDataFromApi();
         return resp;
       } catch (error) {
-        console.error("Error updating type leave:", error);
+        if (error.response?.data?.errors) {
+          this.errors = this.parseErrors(error.response.data.errors);
+        } else {
+          console.error("Unexpected error:", error);
+        }
+        throw error; // Relance l'erreur pour le composant
       }
     },
 
@@ -66,9 +80,24 @@ export const useTypeLeaveStore = defineStore("typeLeaveStore", {
       }
     },
 
-    // Réinitialiser le formulaire de type de congé
+    // Réinitialiser les erreurs
+    resetErrors() {
+      this.errors = {};
+    },
+
+    // Réinitialiser le formulaire et les erreurs
     resetForm() {
       this.typeLeaveForm.name = null;
+      this.resetErrors();
+    },
+
+    // Parse les erreurs renvoyées par le backend
+    parseErrors(errorArray) {
+      const parsed = {};
+      errorArray.forEach((err) => {
+        parsed[err.path] = err.msg; // Stocke chaque erreur par son chemin (ex: name)
+      });
+      return parsed;
     },
   },
 });

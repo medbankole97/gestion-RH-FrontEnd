@@ -2,7 +2,8 @@
   <div class="container-fluid">
     <h2 class="text-center mb-4">{{ $t('typeLeavess.addNew') }}</h2>
 
-    <div class="d-flex justify-content-center"> <!-- Wrapper pour le centrage -->
+    <div class="d-flex justify-content-center">
+      <!-- Wrapper pour le centrage -->
       <form @submit.prevent="handleSubmit" class="form-container">
         <div class="mb-3">
           <label for="name" class="form-label">{{ $t('typeLeavess.nameLabel') }}</label>
@@ -11,8 +12,12 @@
             id="name"
             class="form-control"
             v-model="typeLeaveForm.name"
+            :class="{ 'is-invalid': errors.name }"
             required
           />
+          <div v-if="errors.name" class="invalid-feedback">
+            {{ errors.name }}
+          </div>
         </div>
 
         <router-link to="/type-leave" class="btn btn-secondary me-2">
@@ -29,10 +34,9 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
 import { useTypeLeaveStore } from '@/store/typeleaveStore';
-
 import { useI18n } from 'vue-i18n';
 
-const { t } = useI18n(); 
+const { t } = useI18n();
 const router = useRouter();
 const toast = useToast();
 const typeLeaveStore = useTypeLeaveStore();
@@ -41,17 +45,37 @@ const typeLeaveForm = ref({
   name: '',
 });
 
+const errors = ref({});
+
 const handleSubmit = async () => {
   try {
+    // Reset errors before submitting
+    errors.value = {};
+
+    // Appel à l'API pour ajouter le type de congé
     await typeLeaveStore.store(typeLeaveForm.value);
     toast.success(t('typeLeavess.successMessage'));
     router.push({ name: 'list-type-leave' });
   } catch (error) {
-    console.error("Error adding type leave:", error);
-    toast.error($t('typeLeavess.errorMessage'));
+    console.error('Error adding type leave:', error);
+
+    // Gestion des erreurs venant du backend
+    if (error.response && error.response.data && error.response.data.errors) {
+      // Chercher l'erreur qui concerne le champ 'name'
+      const nameError = error.response.data.errors.find(e => e.path === 'name');
+      if (nameError) {
+        errors.value.name = nameError.msg; // Extraire et afficher le message d'erreur
+        toast.error(t('typeLeavess.errorMessage'));
+      }
+    } else {
+      toast.error(t('typeLeavess.genericErrorMessage'));
+    }
   }
 };
 </script>
+
+
+
 
 
 <style scoped>
@@ -113,5 +137,14 @@ const handleSubmit = async () => {
 
 .text-center {
   text-align: center;
+}
+.is-invalid {
+  border-color: #e74c3c !important;
+}
+
+.invalid-feedback {
+  color: #e74c3c;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
 }
 </style>

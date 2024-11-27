@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-time-tracking-container">
+  <div class="detail-time-tracking-container mt-5">
     <h2 class="text-center mb-4">{{ $t('timeTracking.details') }}</h2>
 
     <div class="detail-item">

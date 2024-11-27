@@ -92,15 +92,32 @@ const editTypeLeave = (id) => {
   router.push({ name: 'modifier-type-leave', params: { id: id } });
 };
 
+// const remove = async (id) => {
+//   try {
+//     const verify = window.confirm(t('typeLeaves.actions.deleteConfirm'));
+//     if (verify) {
+//       await typeLeaveStore.destroy(id);
+//       await typeLeaveStore.loadDataFromApi(); 
+//     }
+//   } catch (error) {
+//     console.error("Error deleting type leave:", error.message);
+//   }
+// };
+
 const remove = async (id) => {
   try {
-    const verify = window.confirm(t('typeLeaves.actions.deleteConfirm')); // Utilisez t au lieu de $t
+    const verify = window.confirm(t('typeLeaves.actions.deleteConfirm'));
     if (verify) {
       await typeLeaveStore.destroy(id);
-      await typeLeaveStore.loadDataFromApi(); // Recharger après suppression
+      await typeLeaveStore.loadDataFromApi();
     }
   } catch (error) {
-    console.error("Error deleting type leave:", error.message);
+    // Afficher le message d'erreur retourné par l'API
+    if (error.response && error.response.data.message) {
+      alert(t('typeLeaves.actions.deleteError', { message: error.response.data.message }));
+    } else {
+      console.error("Error deleting type leave:", error.message);
+    }
   }
 };
 

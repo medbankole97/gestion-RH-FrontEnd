@@ -19,6 +19,8 @@
         <thead class="table-header">
           <tr>
             <th scope="col">#</th>
+            <th scope="col">{{ $t('user') }}</th> <!-- Nouvelle colonne -->
+            <th scope="col">{{ $t('email') }}</th>
             <th scope="col">{{ $t('startDate') }}</th>
             <th scope="col">{{ $t('endDate') }}</th>
             <th scope="col">{{ $t('motif') }}</th>
@@ -29,14 +31,20 @@
         </thead>
         <tbody>
           <tr v-if="filteredRequestLeaves.length === 0">
-            <td colspan="7" class="text-center">{{ $t('noData') }}</td>
+            <td colspan="8" class="text-center">{{ $t('noData') }}</td>
           </tr>
           <tr v-for="(requestLeave, index) in filteredRequestLeaves" :key="requestLeave.id" class="table-row">
             <td scope="row">{{ index + 1 }}</td>
+            <td>{{ requestLeave.user?.fullname || 'N/A' }}</td> <!-- Nom de l'utilisateur -->
+            <td>{{ requestLeave.user?.email || 'N/A' }}</td>
             <td>{{ formatDate(requestLeave.start_date) }}</td>
             <td>{{ formatDate(requestLeave.end_date) }}</td>
             <td>{{ requestLeave.motif }}</td>
-            <td :class="{'text-success': requestLeave.status === 'APPROVED', 'text-danger': requestLeave.status === 'REJECTED', 'text-warning': requestLeave.status === 'PENDING'}">
+            <td :class="{
+              'text-success': requestLeave.status === 'APPROVED',
+              'text-danger': requestLeave.status === 'REJECTED',
+              'text-warning': requestLeave.status === 'PENDING'
+            }">
               {{ $t(requestLeave.status.toLowerCase()) }}
             </td>
             <td>{{ getTypeLeaveName(requestLeave.typeLeaveId) }}</td>
@@ -46,12 +54,12 @@
                 class="text-info me-2 cursor-pointer" 
                 @click="viewDetails(requestLeave)" 
               />
-              <font-awesome-icon  v-if="userRoles === 'MANAGER' "
+              <font-awesome-icon v-if="userRoles === 'MANAGER'" 
                 icon="edit" 
                 class="text-warning me-2 cursor-pointer" 
                 @click="editRequestLeave(requestLeave.id)" 
               />
-              <font-awesome-icon  v-if="userRoles === 'ADMIN' "
+              <font-awesome-icon v-if="userRoles === 'ADMIN'" 
                 icon="trash" 
                 class="text-danger cursor-pointer" 
                 @click="remove(requestLeave.id)" 
@@ -63,6 +71,7 @@
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
@@ -85,9 +94,11 @@ const userRoles = ref(authStore.user.role);
 // Filtrer les demandes de congé en fonction de la recherche
 const filteredRequestLeaves = computed(() => {
   if (searchQuery.value) {
-    return requestLeaveStore.requestLeaves.filter((requestLeave) =>
-      requestLeave.motif.toLowerCase().includes(searchQuery.value.toLowerCase())
-    );
+    return requestLeaveStore.requestLeaves.filter((requestLeave) => {
+      const userName = requestLeave.user?.fullname || '';
+      return userName.toLowerCase().includes(searchQuery.value.toLowerCase()) || 
+             requestLeave.motif.toLowerCase().includes(searchQuery.value.toLowerCase());
+    });
   }
   return requestLeaveStore.requestLeaves;
 });

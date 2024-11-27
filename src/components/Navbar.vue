@@ -146,6 +146,7 @@ const changeLanguage = () => {
   background-color: #000;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 .user-info {
   font-size: 1rem;
   font-weight: 500;
@@ -196,6 +197,10 @@ const changeLanguage = () => {
   border: 1px solid #ccc;
   color: #000;
 }
+
+/* .container{
+  padding-top: 56px;
+} */
 
 @media (max-width: 768px) {
   .navbar-nav {

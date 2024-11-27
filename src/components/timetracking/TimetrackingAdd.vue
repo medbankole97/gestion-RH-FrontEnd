@@ -29,7 +29,7 @@
 
       <button
         type="submit"
-        class="btn btn-dark mt-3"
+        class="btn btn-success mt-3"
         :disabled="!isValidDateRange"
       >
         {{ $t('addTimeTracking.saveButton') }}

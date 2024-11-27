@@ -18,40 +18,44 @@
     <div class="table-responsive shadow-lg rounded">
       <table class="table table-hover table-bordered time-tracking-table">
         <thead class="table-header">
-          <tr>
+  <tr>
     <th scope="col">{{ $t('timeTrackingList.columns.index') }}</th>
+    <th scope="col">{{ $t('timeTrackingList.columns.user') }}</th>
+    <th scope="col">{{ $t('timeTrackingList.columns.email') }}</th>
     <th scope="col">{{ $t('timeTrackingList.columns.checkinTime') }}</th>
     <th scope="col">{{ $t('timeTrackingList.columns.checkoutTime') }}</th>
     <th scope="col" class="text-center">{{ $t('timeTrackingList.columns.action') }}</th>
   </tr>
-        </thead>
-        <tbody>
-          <tr v-if="filteredTimeTrackings.length === 0">
-  <td colspan="4" class="text-center">{{ $t('timeTrackingList.noDataMessage') }}</td>
-</tr>
-          <tr v-for="(timeTracking, index) in filteredTimeTrackings" :key="timeTracking.id" class="table-row">
-            <td scope="row">{{ index + 1 }}</td>
-            <td>{{ timeTracking.checkin_time || 'N/A' }}</td>
-            <td>{{ timeTracking.checkout_time || 'N/A' }}</td>
-            <td class="text-center action-icons">
-              <font-awesome-icon 
-                icon="eye" 
-                class="text-info me-2 cursor-pointer" 
-                @click="viewTimeTracking(timeTracking.id)" 
-              />
-              <font-awesome-icon  v-if="userRoles === 'ADMIN' "
-                icon="edit" 
-                class="text-warning me-2 cursor-pointer" 
-                @click="editTimeTracking(timeTracking.id)" 
-              />
-              <font-awesome-icon  v-if="userRoles === 'ADMIN' "
-                icon="trash" 
-                class="text-danger cursor-pointer" 
-                @click="remove(timeTracking.id)" 
-              />
-            </td>
-          </tr>
-        </tbody>
+</thead>
+<tbody>
+  <tr v-if="filteredTimeTrackings.length === 0">
+    <td colspan="5" class="text-center">{{ $t('timeTrackingList.noDataMessage') }}</td>
+  </tr>
+  <tr v-for="(timeTracking, index) in filteredTimeTrackings" :key="timeTracking.id" class="table-row">
+    <td scope="row">{{ index + 1 }}</td>
+    <td>{{ timeTracking.user.fullname || 'N/A' }}</td>
+    <td>{{ timeTracking.user.email || 'N/A' }}</td>
+    <td>{{ timeTracking.checkin_time || 'N/A' }}</td>
+    <td>{{ timeTracking.checkout_time || 'N/A' }}</td>
+    <td class="text-center action-icons">
+      <font-awesome-icon 
+        icon="eye" 
+        class="text-info me-2 cursor-pointer" 
+        @click="viewTimeTracking(timeTracking.id)" 
+      />
+      <font-awesome-icon v-if="userRoles === 'ADMIN'" 
+        icon="edit" 
+        class="text-warning me-2 cursor-pointer" 
+        @click="editTimeTracking(timeTracking.id)" 
+      />
+      <font-awesome-icon v-if="userRoles === 'ADMIN'" 
+        icon="trash" 
+        class="text-danger cursor-pointer" 
+        @click="remove(timeTracking.id)" 
+      />
+    </td>
+  </tr>
+</tbody>
       </table>
     </div>
   </div>

@@ -77,6 +77,8 @@
         "noDataMessage": "No data available",
         "columns": {
           "index": "#",
+          "user": "full Name",
+          "email": "Email",
           "checkinTime": "Check-in Time",
           "checkoutTime": "Check-out Time",
           "action": "Action"
@@ -167,6 +169,8 @@
       "requestLeaveList": "Request Leave List",
       "searchPlaceholder": "Search...",
       "newRequestLeave": "New Request Leave",
+      "user": "full Name",
+      "email": "Email",
       "startDate": "Start Date",
       "endDate": "End Date",
       "motif": "Motif",

@@ -79,6 +79,7 @@
             "noDataMessage": "لا توجد بيانات متاحة",
             "columns": {
               "index": "#",
+              "email": "البريد الإلكتروني",
               "checkinTime": "وقت الدخول",
               "checkoutTime": "وقت الخروج",
               "action": "إجراء"
