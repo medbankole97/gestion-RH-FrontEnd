@@ -35,6 +35,7 @@
           required
         ></textarea>
       </div>
+      <!-- Champ status désactivé pour les employés -->
       <div class="mb-3">
         <label for="status" class="form-label">{{ $t('status') }}</label>
         <select
@@ -97,15 +98,23 @@ const typeLeaveStore = useTypeLeaveStore();
 const toast = useToast();
 const router = useRouter();
 
+// Formulaire de demande
 const form = ref({
   start_date: '',
   end_date: '',
   motif: '',
-  status: 'PENDING',
+  status: 'PENDING', // Toujours initialisé à "PENDING"
   typeLeaveId: null,
 });
 
+// Liste des types de congés
 const typeLeaves = ref([]);
+
+// Simuler le rôle de l'utilisateur (peut venir d'une API ou d'un store utilisateur)
+const userRole = ref('EMPLOYEE'); // Exemple : "EMPLOYEE" ou "MANAGER"
+
+// Vérifier si l'utilisateur est un employé
+const isEmployee = computed(() => userRole.value === 'EMPLOYEE');
 
 // Validation des dates
 const isValidDateRange = computed(() => {
@@ -114,6 +123,7 @@ const isValidDateRange = computed(() => {
   return !form.value.start_date || !form.value.end_date || endDate > startDate;
 });
 
+// Soumission du formulaire
 const onSubmit = async () => {
   if (!isValidDateRange.value) {
     toast.error(t('endDateError'));
@@ -121,6 +131,9 @@ const onSubmit = async () => {
   }
 
   try {
+    // Toujours forcer le statut à "PENDING" côté client
+    form.value.status = 'PENDING';
+
     await requestLeaveStore.store(form.value);
     toast.success(t('addSuccess'));
     router.push({ name: 'list-request-leave' });
@@ -129,6 +142,7 @@ const onSubmit = async () => {
   }
 };
 
+// Chargement des types de congés
 onMounted(async () => {
   await typeLeaveStore.loadDataFromApi();
   typeLeaves.value = typeLeaveStore.typeLeaves;

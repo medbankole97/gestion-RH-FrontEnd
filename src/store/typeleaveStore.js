@@ -67,8 +67,10 @@ export const useTypeLeaveStore = defineStore("typeLeaveStore", {
         await this.loadDataFromApi();
       } catch (error) {
         console.error("Error deleting type leave:", error);
+        throw error; // Relance l'erreur pour le composant
       }
-    },
+    }
+    ,
 
     // Récupérer un type de congé par ID
     async getById(id) {

@@ -4,7 +4,7 @@
 
     <div class="d-flex justify-content-center">
       <!-- Wrapper pour le centrage -->
-      <form @submit.prevent="onSubmit" class="form-container">
+      <form @submit.prevent="handleSubmit" class="form-container">
         <div class="mb-3">
           <label for="name" class="form-label">{{ $t('editTypeLeave.typeLeaveName') }}</label>
           <input
@@ -12,9 +12,13 @@
             id="name"
             class="form-control"
             v-model="form.name"
+            :class="{ 'is-invalid': errors.name }"
             :placeholder="$t('editTypeLeave.placeholder')"
             required
           />
+          <div v-if="errors.name" class="invalid-feedback">
+            {{ errors.name }}
+          </div>
         </div>
 
         <div class="d-flex justify-content-between">
@@ -31,11 +35,13 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useToast } from 'vue-toastification';
 import { useTypeLeaveStore } from '@/store/typeLeaveStore';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const router = useRouter();
 const route = useRoute();
 const toast = useToast();
@@ -45,6 +51,8 @@ const form = ref({
   name: '',
 });
 
+const errors = ref({});
+
 // Charger les données du type de congé à éditer
 const loadTypeLeave = async () => {
   try {
@@ -52,24 +60,35 @@ const loadTypeLeave = async () => {
     form.value.name = typeLeave.name;
   } catch (error) {
     console.error('Error loading type leave:', error);
-    toast.error($t('editTypeLeave.errorLoading'));
+    toast.error(t('editTypeLeave.errorLoading'));
   }
 };
 
-// Mettre à jour les informations du type de congé
-const onSubmit = async () => {
+// Soumettre les modifications
+const handleSubmit = async () => {
   try {
+    errors.value = {}; // Réinitialiser les erreurs
+
+    // Mettre à jour les informations du type de congé
     await typeLeaveStore.update(route.params.id, form.value);
-    toast.success('Type Leave updated successfully');
+    toast.success(t('editTypeLeave.successMessage'));
     router.push({ name: 'list-type-leave' });
   } catch (error) {
     console.error('Error updating type leave:', error);
-    toast.error('Could not update type leave. Please try again.');
+
+    // Gestion des erreurs venant du backend
+    if (error.response && error.response.data && error.response.data.errors) {
+      error.response.data.errors.forEach((err) => {
+        if (err.path === 'name') {
+          errors.value.name = err.msg; // Extraire et afficher le message d'erreur pour le champ "name"
+        }
+      });
+    } else {
+      toast.error(t('editTypeLeave.genericErrorMessage'));
+    }
   }
 };
 
-
-// Charger les données lorsque le composant est monté
 onMounted(loadTypeLeave);
 </script>
 
@@ -82,7 +101,7 @@ onMounted(loadTypeLeave);
 
 .d-flex {
   min-height: 10vh;
-  align-items: center; 
+  align-items: center;
 }
 
 .form-container {
@@ -130,7 +149,13 @@ onMounted(loadTypeLeave);
   background-color: #218838;
 }
 
-.text-center {
-  text-align: center;
+.is-invalid {
+  border-color: #e74c3c !important;
+}
+
+.invalid-feedback {
+  color: #e74c3c;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
 }
 </style>

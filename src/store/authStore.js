@@ -19,17 +19,21 @@ export const useAuthStore = defineStore("auth", {
         localStorage.setItem('authToken', accessToken);
         localStorage.setItem('authUser', JSON.stringify(user));
 
-        
-
         // Ajout de l'authentification dans les headers d'axios
         axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
       } catch (error) {
         this.isAuthenticated = false;
         this.token = null;
         this.user = null;
-        throw new Error(error.response?.data?.error || 'Login failed');
+
+        // Renvoyer directement le message d'erreur du backend
+        throw new Error(
+          error.response?.data?.message || 
+          'Une erreur inattendue s\'est produite. Veuillez réessayer.'
+        );
       }
     },
+
 
     logout() {
       this.isAuthenticated = false;

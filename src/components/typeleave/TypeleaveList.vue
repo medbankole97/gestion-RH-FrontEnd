@@ -63,7 +63,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useTypeLeaveStore } from '@/store/typeleaveStore';
-
+import { useToast } from 'vue-toastification';
 import { useI18n } from 'vue-i18n';
 import { useAuthStore } from '../../store/authStore';
 
@@ -74,6 +74,7 @@ const typeLeaveStore = useTypeLeaveStore();
 const searchQuery = ref("");
 const authStore = useAuthStore();
 const userRoles = ref(authStore.user.role);
+const toast = useToast();
 
 const filteredTypeLeaves = computed(() => {
   if (searchQuery.value) {
@@ -108,15 +109,15 @@ const remove = async (id) => {
   try {
     const verify = window.confirm(t('typeLeaves.actions.deleteConfirm'));
     if (verify) {
-      await typeLeaveStore.destroy(id);
-      await typeLeaveStore.loadDataFromApi();
+      await typeLeaveStore.destroy(id); 
+      toast.success(t('typeLeaves.actions.deleteSuccess'));
     }
   } catch (error) {
-    // Afficher le message d'erreur retourné par l'API
+    // Vérifiez si l'erreur provient de la réponse de l'API
     if (error.response && error.response.data.message) {
-      alert(t('typeLeaves.actions.deleteError', { message: error.response.data.message }));
+      toast.warning(error.response.data.message); // Affiche le message d'erreur retourné par l'API
     } else {
-      console.error("Error deleting type leave:", error.message);
+      toast.error(t('typeLeaves.actions.unexpectedError'));
     }
   }
 };
