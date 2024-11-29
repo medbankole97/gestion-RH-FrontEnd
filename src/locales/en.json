@@ -115,6 +115,7 @@
         "checkinLabel": "Check-in Time",
         "checkoutLabel": "Check-out Time",
         "updateButton": "Update",
+        "updateSuccess": "Time tracking updated successfully!",
         "checkoutError": "Checkout time must be after check-in time.",
         "updateError": "An error occurred while updating the time tracking entry."
       },

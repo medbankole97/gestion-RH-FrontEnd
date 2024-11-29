@@ -43,7 +43,7 @@
         class="text-info me-2 cursor-pointer" 
         @click="viewTimeTracking(timeTracking.id)" 
       />
-      <font-awesome-icon v-if="userRoles === 'ADMIN'" 
+      <font-awesome-icon 
         icon="edit" 
         class="text-warning me-2 cursor-pointer" 
         @click="editTimeTracking(timeTracking.id)" 

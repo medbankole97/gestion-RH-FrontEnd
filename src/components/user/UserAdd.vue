@@ -34,21 +34,32 @@
               {{ errors.email }}
             </div>
           </div>
-          <div class="mb-3">
-            <label for="password" class="form-label">{{ $t('userAdd.password') }}</label>
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              :class="{ 'is-invalid': errors.password }"
-              :placeholder="$t('userAdd.passwordPlaceholder')"
-              v-model="form.password"
-              required
-            />
-            <div v-if="errors.password" class="invalid-feedback">
-              {{ errors.password }}
-            </div>
-          </div>
+          <div class="mb-3 position-relative">
+  <label for="password" class="form-label">{{ $t('userAdd.password') }}</label>
+  <div class="input-group">
+    <input
+      :type="passwordVisible ? 'text' : 'password'"
+      class="form-control"
+      id="password"
+      :class="{ 'is-invalid': errors.password }"
+      :placeholder="$t('userAdd.passwordPlaceholder')"
+      v-model="form.password"
+      required
+    />
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      @click="togglePasswordVisibility"
+      aria-label="Toggle password visibility"
+    >
+      <i :class="passwordVisible ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+    </button>
+  </div>
+  <div v-if="errors.password" class="invalid-feedback">
+    {{ errors.password }}
+  </div>
+</div>
+
           <div class="mb-3">
             <label for="role" class="form-label">{{ $t('userAdd.role') }}</label>
             <select
@@ -88,7 +99,6 @@
   </div>
 </template>
 
-
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -110,6 +120,14 @@ const form = ref({
 
 // Errors object
 const errors = ref({});
+
+// Password visibility state
+const passwordVisible = ref(false);
+
+// Toggle password visibility
+const togglePasswordVisibility = () => {
+  passwordVisible.value = !passwordVisible.value;
+};
 
 // Submit handler
 const onSubmit = async () => {
@@ -137,6 +155,7 @@ const onSubmit = async () => {
   }
 };
 </script>
+
 
 
 

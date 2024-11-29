@@ -23,9 +23,15 @@ export const useTimeTrackingStore = defineStore('timetrackingStore', {
     },
 
     async update(id, timeTracking) {
-      return await axios.put(`http://localhost:5000/time-trackings/${id}`, timeTracking);
+      try {
+        const response = await axios.put(`http://localhost:5000/time-trackings/${id}`, timeTracking);
+        return response.data; // Retourne les données de la réponse si la mise à jour réussit
+      } catch (error) {
+        console.error('Error updating time tracking:', error);
+        throw error; // Relance l'erreur pour qu'elle soit capturée dans le composant
+      }
     },
-
+    
     async destroy(id) {
       await axios.delete(`http://localhost:5000/time-trackings/${id}`);
       this.timeTrackings = this.timeTrackings.filter(t => t.id !== id);
